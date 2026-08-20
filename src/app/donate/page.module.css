@@ -1,0 +1,445 @@
+.container {
+  padding: 100px 24px 64px;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #fff, var(--text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.formContainer {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 8px;
+}
+
+.disasterGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.disasterCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.disasterCard:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.selectedCard {
+  background: rgba(var(--primary-color-rgb), 0.15);
+  border-color: var(--primary-color);
+}
+
+.disasterInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.urgentBadge {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.amountGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px;
+}
+
+.amountBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.amountBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.selectedAmount {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.customAmountWrapper {
+  overflow: hidden;
+}
+
+.inputIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 16px;
+  color: var(--text-muted);
+}
+
+.inputField {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px 16px 16px 48px;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputField:focus {
+  border-color: var(--primary-color);
+}
+
+.allocationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.checkboxLabel:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-color);
+}
+
+.checkboxText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.donorForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 0 16px;
+  transition: border-color 0.2s;
+}
+
+.inputGroup:focus-within {
+  border-color: var(--primary-color);
+}
+
+.inputGroup svg {
+  color: var(--text-muted);
+}
+
+.inputGroup input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 16px;
+  color: var(--text-color);
+  font-size: 1rem;
+  outline: none;
+}
+
+.inputGroup input:disabled {
+  opacity: 0.5;
+}
+
+.anonymousToggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.anonymousToggle input[type="checkbox"] {
+  accent-color: var(--primary-color);
+  width: 16px;
+  height: 16px;
+}
+
+.submitBtn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 16px;
+}
+
+.submitBtn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.disclaimer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: -16px;
+}
+
+.transparencySection {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 32px;
+}
+
+.transparencyTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.barChartContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.barChart {
+  display: flex;
+  height: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.barSegment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modalContent {
+  background: var(--bg-color);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.closeBtn:hover {
+  color: var(--text-color);
+}
+
+.successIcon {
+  color: var(--success-color);
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.modalDesc {
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.receiptBox {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed var(--glass-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.receiptBox span {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.receiptBox strong {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.trackLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.trackLink:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding-top: 80px;
+  }
+  
+  .formContainer, .transparencySection {
+    padding: 24px;
+  }
+  
+  .allocationGrid {
+    grid-template-columns: 1fr;
+  }
+}

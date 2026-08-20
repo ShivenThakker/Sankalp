@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🆘 ReliefNet
+# 🆘 Sankalp
 
 ### AI-Powered National Disaster Relief Coordination & Verified NGO Network
 
@@ -227,15 +227,6 @@ SACHET handles the *alert*. ReliefNet handles the *"what happens next"* — conn
 
 ---
 
-## 📦 Getting Started
-
-```bash
-git clone https://github.com/<your-username>/reliefnet.git
-cd reliefnet
-# setup instructions coming soon
-```
-
----
 
 <div align="center">
 

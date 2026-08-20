@@ -191,6 +191,6 @@ SACHET handles the *alert*. Sankalp handles the *"what happens next"* — connec
 
 ### Built for Smart India Hackathon 2026 🇮🇳
 
-**When disaster strikes, seconds matter. ReliefNet makes sure help finds them.**
+**When disaster strikes, seconds matter. Sankalp makes sure help finds them.**
 
 </div>

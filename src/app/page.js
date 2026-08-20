@@ -186,7 +186,7 @@ export default function LandingPage() {
         </div>
         <div className={styles.featuresGrid}>
           {[
-            { icon: '📊', title: 'Resource Gap Analysis', desc: 'See exactly what\\'s covered and what\\'s critically short across your district' },
+            { icon: '📊', title: 'Resource Gap Analysis', desc: "See exactly what's covered and what's critically short across your district" },
             { icon: '🏢', title: 'Unified NGO View', desc: 'Every verified organization, their capabilities, and current resources in one dashboard' },
             { icon: '⚡', title: 'Smart Assignment', desc: 'AI-powered matching connects needs to the nearest capable responder' }
           ].map((feat, idx) => (

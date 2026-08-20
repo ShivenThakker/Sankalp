@@ -7,8 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'ReliefNet — Disaster Relief Coordination',
-  description: 'A platform to coordinate disaster relief efforts seamlessly.',
-  themeColor: '#0f0f23',
+  description: 'India\'s first AI-powered disaster relief coordination platform. Connecting affected citizens with verified NGOs, donors, and volunteers in real-time.',
 };
 
 export const viewport = {

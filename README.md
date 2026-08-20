@@ -29,7 +29,7 @@ India already has pieces of the puzzle:
 
 But nothing **connects** alerts → verified capacity → the people who need it, in real time.
 
-**ReliefNet is the missing layer between "disaster happens" and "help arrives."**
+**Sankalp is the missing layer between "disaster happens" and "help arrives."**
 
 ---
 
@@ -171,61 +171,20 @@ Relief_Request
 
 </details>
 
----
-
-## 🎬 Demo Flow (Hackathon Vertical Slice)
-
-1. Flood hits District X → SACHET-style alert fires
-2. Map highlights affected area
-3. System surfaces 25 verified NGOs in range
-4. AI ranks NGOs by capability + distance + trust
-5. Citizens submit relief requests via 🆘 mode
-6. Matching engine auto-assigns organizations
-7. NGOs update live resource availability
-8. Dashboard surfaces real-time shortages
-9. Donors see verified orgs + exact current needs
-10. Admin console shows the full disaster picture
 
 ---
 
-## 🧩 Feasibility Snapshot
-
-| Component | Confidence |
-|---|---|
-| NGO database & verification | ⭐⭐⭐⭐⭐ |
-| Maps / location layer | ⭐⭐⭐⭐⭐ |
-| Disaster alert ingestion | ⭐⭐⭐⭐ |
-| AI matching engine | ⭐⭐⭐⭐ |
-| Volunteer matching | ⭐⭐⭐⭐ |
-| Donation tracking | ⭐⭐⭐ |
-| National-scale deployment | ⭐⭐ *(post-hackathon)* |
-
----
 
 ## 🎯 Positioning
 
 **We're not competing with SACHET — we're completing it.**
 
-SACHET handles the *alert*. ReliefNet handles the *"what happens next"* — connecting affected people, verified NGOs, volunteers, and donors into a single coordinated response.
+SACHET handles the *alert*. Sankalp handles the *"what happens next"* — connecting affected people, verified NGOs, volunteers, and donors into a single coordinated response.
 
-> ⚠️ ReliefNet's Trust Score is a platform-generated risk/verification indicator based on documented evidence — **it is not a government certification.**
-
----
-
-## 🛠️ Tech Stack
-
-> _Fill in once finalized — placeholder below_
-
-| Layer | Tech |
-|---|---|
-| Frontend | — |
-| Backend | — |
-| Database | — |
-| Maps/Geo | — |
-| AI/Matching | — |
-| Auth | — |
+> ⚠️ Sankalp's Trust Score is a platform-generated risk/verification indicator based on documented evidence — **it is not a government certification.**
 
 ---
+
 
 
 <div align="center">

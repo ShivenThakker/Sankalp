@@ -165,10 +165,10 @@ export default function DisastersPage() {
         {filteredDisasters.map((disaster) => (
           <motion.div 
             key={disaster.id}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 }
-            }}
+            initial={{ opacity: 0, y: 40 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, amount: 0.2 }} 
+            transition={{ duration: 0.6, ease: 'easeOut' }}
             className={`${styles.card} ${styles[`border-${disaster.severity}`]}`}
           >
             <div className={styles.cardHeader}>

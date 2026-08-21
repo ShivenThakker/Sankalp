@@ -8,8 +8,8 @@
 
 .loader {
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--color-primary);
+  border: 2px solid #E5E7EB;
+  border-top-color: #2D6A4F;
   animation: spin 1s linear infinite;
 }
 
@@ -31,9 +31,10 @@
 }
 
 .text {
-  color: var(--color-text-secondary);
+  color: #6B7280;
   font-size: 0.9rem;
   font-weight: 500;
+  font-family: 'Inter', sans-serif;
   animation: pulse 2s ease-in-out infinite;
 }
 

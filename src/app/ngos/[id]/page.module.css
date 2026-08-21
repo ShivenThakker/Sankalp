@@ -1,32 +1,35 @@
 .pageContainer {
-  padding: 2rem;
+  padding: 100px 24px 40px;
   max-width: 1200px;
   margin: 0 auto;
-  color: var(--foreground, #ffffff);
+  color: #374151;
+  background-color: #FAFAF8;
+  min-height: 100vh;
 }
 
 .backLink {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: #a0a0a0;
+  color: #6B7280;
   text-decoration: none;
   margin-bottom: 2rem;
   font-size: 0.9rem;
   transition: color 0.2s;
+  font-family: 'Inter', sans-serif;
 }
 
 .backLink:hover {
-  color: white;
+  color: #1B1B1B;
 }
 
 .headerCard {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: 16px;
   padding: 2rem;
   margin-bottom: 2rem;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
 .headerTop {
@@ -37,47 +40,54 @@
 }
 
 .title {
+  font-family: 'Playfair Display', serif;
   font-size: 2.2rem;
   font-weight: 700;
   margin: 0 0 0.5rem 0;
+  color: #1B1B1B;
 }
 
 .subtitle {
-  color: #a0a0a0;
+  color: #6B7280;
   font-size: 1rem;
   margin: 0;
+  font-family: 'Inter', sans-serif;
 }
 
 .description {
-  color: #ddd;
+  color: #374151;
   line-height: 1.6;
   margin-bottom: 2rem;
   max-width: 800px;
+  font-family: 'Inter', sans-serif;
 }
 
 .mainBadge {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: #D8F3DC;
+  border: 1px solid rgba(45, 106, 79, 0.2);
   padding: 1rem;
   border-radius: 12px;
 }
 
 .badgeScore {
+  font-family: 'Inter', sans-serif;
   font-size: 2rem;
   font-weight: 800;
-  color: #4ade80;
+  color: #2D6A4F;
   line-height: 1;
 }
 
 .badgeLabel {
+  font-family: 'Inter', sans-serif;
   font-size: 0.75rem;
-  color: #4ade80;
+  color: #2D6A4F;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 0.5rem;
+  font-weight: 600;
 }
 
 .contactGrid {
@@ -85,15 +95,16 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid #E5E7EB;
 }
 
 .contactItem {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #bbb;
+  color: #6B7280;
   font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
 }
 
 .contentGrid {
@@ -115,11 +126,11 @@
 }
 
 .glassCard {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: 16px;
   padding: 1.5rem;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
 .cardHeader {
@@ -127,14 +138,17 @@
 }
 
 .cardHeader h2 {
+  font-family: 'Playfair Display', serif;
   font-size: 1.25rem;
   margin: 0 0 0.5rem 0;
+  color: #1B1B1B;
 }
 
 .cardHeader p {
-  color: #888;
+  color: #6B7280;
   font-size: 0.85rem;
   margin: 0;
+  font-family: 'Inter', sans-serif;
 }
 
 .tableWrapper {
@@ -145,19 +159,25 @@
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  font-family: 'Inter', sans-serif;
 }
 
 .table th, .table td {
   padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid #E5E7EB;
+}
+
+/* Zebra striping for table rows as requested */
+.table tbody tr:nth-child(even) {
+  background-color: #FAFAF8;
 }
 
 .table th {
-  color: #888;
+  color: #6B7280;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .table td {
@@ -171,11 +191,11 @@
 }
 
 .paramIcon {
-  color: #666;
+  color: #6B7280;
 }
 
 .paramDetail {
-  color: #888;
+  color: #6B7280;
   font-size: 0.85rem;
 }
 
@@ -186,25 +206,26 @@
   font-weight: 500;
 }
 
-.iconGreen, .text-passed { color: #4ade80; }
-.iconRed, .text-failed { color: #f87171; }
-.iconYellow, .text-pending { color: #fbbf24; }
-.iconGray, .text-not_applicable { color: #888; }
+.iconGreen, .text-passed { color: #2D6A4F; }
+.iconRed, .text-failed { color: #D62828; }
+.iconYellow, .text-pending { color: #E76F51; }
+.iconGray, .text-not_applicable { color: #6B7280; }
 
 .dateCell {
-  color: #888;
+  color: #6B7280;
   font-size: 0.85rem;
 }
 
 .verificationSummaryBadge {
   margin-top: 1.5rem;
   padding: 1rem;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: #D8F3DC;
+  border: 1px solid rgba(45, 106, 79, 0.2);
   border-radius: 8px;
-  color: #4ade80;
+  color: #2D6A4F;
   font-weight: 600;
   text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .capabilitiesGrid {
@@ -220,17 +241,19 @@
   padding: 0.75rem;
   border-radius: 8px;
   font-size: 0.9rem;
-  background: rgba(255, 255, 255, 0.05);
+  font-family: 'Inter', sans-serif;
 }
 
 .capActive {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  color: #1B1B1B;
 }
 
 .capInactive {
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-  color: #666;
+  background: transparent;
+  border: 1px dashed #E5E7EB;
+  color: #6B7280;
 }
 
 .capStatusDot {
@@ -239,12 +262,12 @@
   border-radius: 50%;
 }
 
-.capActive .capStatusDot { background: #4ade80; box-shadow: 0 0 8px #4ade80; }
-.capInactive .capStatusDot { background: #666; }
+.capActive .capStatusDot { background: #2D6A4F; }
+.capInactive .capStatusDot { background: #E5E7EB; }
 
 .boldCell {
   font-weight: 600;
-  color: white;
+  color: #1B1B1B;
 }
 
 .freshnessCell {
@@ -255,7 +278,7 @@
 }
 
 .timeSubtext {
-  color: #666;
+  color: #6B7280;
   font-size: 0.75rem;
 }
 
@@ -272,18 +295,19 @@
   gap: 0.5rem;
   width: 100%;
   padding: 1rem;
-  background: #3b82f6;
+  background: #457B9D;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 1rem;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .donateBtn:hover {
-  background: #2563eb;
+  background: #1D3557;
 }
 
 .contactBtn {
@@ -293,16 +317,17 @@
   gap: 0.5rem;
   width: 100%;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  background: transparent;
+  color: #457B9D;
+  border: 2px solid #457B9D;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 1rem;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .contactBtn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: #E3F2FD;
 }

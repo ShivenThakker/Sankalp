@@ -3,6 +3,7 @@
   padding: 100px 24px 48px;
   max-width: 1400px;
   margin: 0 auto;
+  background-color: #FAFAF8;
 }
 
 .header {
@@ -11,29 +12,28 @@
 }
 
 .title {
+  font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--text-primary, #f9fafb);
+  color: #1B1B1B;
   margin-bottom: 12px;
-  background: linear-gradient(135deg, #60a5fa, #3b82f6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
+  font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
-  color: var(--text-secondary, #9ca3af);
+  color: #6B7280;
   max-width: 600px;
   margin: 0 auto;
 }
 
 .mapWrapper {
   margin-bottom: 32px;
-  border-radius: 12px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  background: rgba(17, 24, 39, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
   padding: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid #E5E7EB;
 }
 
 .summaryGrid {
@@ -43,22 +43,20 @@
 }
 
 .summaryCard {
-  background: rgba(31, 41, 55, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: 16px;
   padding: 24px;
   display: flex;
   align-items: center;
   gap: 16px;
   transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
 .summaryCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  background: rgba(31, 41, 55, 0.6);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
 
 .cardIcon {
@@ -68,22 +66,35 @@
   justify-content: center;
   width: 64px;
   height: 64px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #D8F3DC;
+  color: #2D6A4F;
   border-radius: 12px;
 }
 
+.summaryCard:nth-child(2) .cardIcon {
+  background: #FFF3E0;
+  color: #E76F51;
+}
+
+.summaryCard:nth-child(3) .cardIcon {
+  background: #E3F2FD;
+  color: #457B9D;
+}
+
 .cardContent h3 {
+  font-family: 'Inter', sans-serif;
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--text-primary, #f9fafb);
+  color: #1B1B1B;
   margin: 0 0 4px 0;
 }
 
 .cardContent p {
   margin: 0;
   font-size: 0.9rem;
-  color: var(--text-secondary, #9ca3af);
+  color: #6B7280;
   font-weight: 500;
+  font-family: 'Inter', sans-serif;
 }
 
 @media (max-width: 768px) {

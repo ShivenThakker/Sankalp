@@ -1,51 +1,41 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Sizes */
-.sm {
-  padding: 2px 8px;
-  font-size: 0.7rem;
-}
-
-.md {
-  padding: 4px 12px;
-  font-size: 0.8rem;
-}
-
-/* Variants */
 .success {
-  background: rgba(var(--color-success-rgb), 0.15);
-  color: var(--color-success);
-  border: 1px solid rgba(var(--color-success-rgb), 0.3);
+  background: #D8F3DC;
+  color: #2D6A4F;
+  border: 1px solid rgba(45, 106, 79, 0.2);
 }
 
 .warning {
-  background: rgba(var(--color-warning-rgb), 0.15);
-  color: var(--color-warning);
-  border: 1px solid rgba(var(--color-warning-rgb), 0.3);
+  background: #FFF3E0;
+  color: #E76F51;
+  border: 1px solid rgba(231, 111, 81, 0.2);
 }
 
 .danger {
-  background: rgba(var(--color-danger-rgb), 0.15);
-  color: var(--color-danger);
-  border: 1px solid rgba(var(--color-danger-rgb), 0.3);
+  background: #FFCCD5;
+  color: #D62828;
+  border: 1px solid rgba(214, 40, 40, 0.2);
 }
 
 .info {
-  background: rgba(var(--color-info-rgb), 0.15);
-  color: var(--color-info);
-  border: 1px solid rgba(var(--color-info-rgb), 0.3);
+  background: #E3F2FD;
+  color: #457B9D;
+  border: 1px solid rgba(69, 123, 157, 0.2);
 }
 
 .neutral {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-text-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #F3F4F6;
+  color: #374151;
+  border: 1px solid #E5E7EB;
 }

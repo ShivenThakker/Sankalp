@@ -3,8 +3,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border-radius: 8px;
-  font-weight: 500;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
   cursor: pointer;
   border: none;
   text-decoration: none;
@@ -33,55 +34,34 @@
 
 /* Variants */
 .primary {
-  background: var(--color-primary);
+  background: #2D6A4F;
   color: white;
-  box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.3);
 }
 
-.primary:hover:not(.disabled) {
-  box-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.6);
+.primary:hover:not(:disabled) {
+  background: #1B4332;
 }
 
 .secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-text);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: #2D6A4F;
+  border: 2px solid #2D6A4F;
 }
 
-.secondary:hover:not(.disabled) {
-  background: rgba(255, 255, 255, 0.15);
+.secondary:hover:not(:disabled) {
+  background: #D8F3DC;
 }
 
 .danger {
-  background: var(--color-danger);
+  background: #D62828;
   color: white;
 }
 
-.danger:hover:not(.disabled) {
-  box-shadow: 0 0 15px rgba(var(--color-danger-rgb), 0.6);
+.danger:hover:not(:disabled) {
+  background: #9B1C1C;
 }
 
-.ghost {
-  background: transparent;
-  color: var(--color-text-secondary);
-}
-
-.ghost:hover:not(.disabled) {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text);
-}
-
-/* States */
-.disabled {
+.button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.spinner {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

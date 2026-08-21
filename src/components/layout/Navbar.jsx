@@ -35,6 +35,10 @@ export default function Navbar() {
     return !link.hideForRoles.includes(role);
   });
 
+  if (pathname === '/login') {
+    return null;
+  }
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { Building2, HandHeart, Shield } from 'lucide-react';
+import { Building2, HandHeart } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import styles from './page.module.css';
 
@@ -31,14 +31,6 @@ export default function LoginPage() {
       icon: HandHeart,
       accent: 'green',
       path: '/volunteer'
-    },
-    {
-      id: 'dc',
-      title: 'District Collector',
-      description: 'Command center access, resource coordination, God Mode',
-      icon: Shield,
-      accent: 'orange',
-      path: '/dashboard/admin'
     }
   ];
 

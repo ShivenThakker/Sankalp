@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import styles from './Navbar.module.css';
-import Button from '../ui/Button';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +23,7 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.icon}>🆘</span> Sankalp
+          🌿 <span className={styles.brandText}>Sankalp</span>
         </Link>
         
         <div className={styles.desktopLinks}>
@@ -32,17 +31,18 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`${styles.link} ${pathname === link.href ? styles.active : ''}`}
+              className={pathname === link.href ? styles.activeLink : styles.link}
             >
               {link.name}
+              {pathname === link.href && <span className={styles.activeIndicator}></span>}
             </Link>
           ))}
         </div>
 
         <div className={styles.actions}>
-          <Button href="/login" variant="primary" size="sm" className={styles.loginBtn}>
+          <Link href="/login" className="btn btn-primary btn-sm">
             Login
-          </Button>
+          </Link>
           <button className={styles.mobileMenuBtn} onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -55,7 +55,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`${styles.mobileLink} ${pathname === link.href ? styles.active : ''}`}
+              className={pathname === link.href ? styles.mobileActiveLink : styles.mobileLink}
               onClick={() => setIsOpen(false)}
             >
               {link.name}

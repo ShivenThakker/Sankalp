@@ -247,16 +247,16 @@ export default function DonatePage() {
           <h2 className={styles.transparencyTitle}>Where Your Money Goes</h2>
           <div className={styles.barChartContainer}>
             <div className={styles.barChart}>
-              <div className={styles.barSegment} style={{width: '60%', backgroundColor: 'var(--success-color)'}}>60%</div>
-              <div className={styles.barSegment} style={{width: '25%', backgroundColor: 'var(--warning-color)'}}>25%</div>
-              <div className={styles.barSegment} style={{width: '10%', backgroundColor: 'var(--danger-color)'}}>10%</div>
-              <div className={styles.barSegment} style={{width: '5%', backgroundColor: 'var(--text-muted)'}}>5%</div>
+              <div className={styles.barSegment} style={{width: '60%', backgroundColor: '#10b981'}}>60%</div>
+              <div className={styles.barSegment} style={{width: '25%', backgroundColor: '#f59e0b'}}>25%</div>
+              <div className={styles.barSegment} style={{width: '10%', backgroundColor: '#ef4444'}}>10%</div>
+              <div className={styles.barSegment} style={{width: '5%', backgroundColor: '#6366f1'}}>5%</div>
             </div>
             <div className={styles.legend}>
-              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: 'var(--success-color)'}}></span>Direct Relief</div>
-              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: 'var(--warning-color)'}}></span>Logistics</div>
-              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: 'var(--danger-color)'}}></span>Emergency Reserve</div>
-              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: 'var(--text-muted)'}}></span>Platform</div>
+              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#10b981'}}></span>Direct Relief</div>
+              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#f59e0b'}}></span>Logistics</div>
+              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#ef4444'}}></span>Emergency Reserve</div>
+              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#6366f1'}}></span>Platform</div>
             </div>
           </div>
         </section>

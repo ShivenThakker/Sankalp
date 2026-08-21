@@ -6,11 +6,15 @@ import { IndianRupee, Heart, ShieldCheck, MapPin, Truck, Home, PlusCircle, User,
 import styles from './page.module.css';
 
 const DISASTERS = [
-  { id: 'assam', title: 'Assam Floods', urgent: true },
-  { id: 'odisha', title: 'Cyclone Warning Odisha', urgent: false },
-  { id: 'uttarakhand', title: 'Forest Fire Uttarakhand', urgent: false },
+  { id: 'assam', title: 'Assam Floods August 2026', urgent: true },
+  { id: 'kerala', title: 'Kerala Landslides - Wayanad', urgent: true },
+  { id: 'odisha', title: 'Cyclone Warning - Odisha Coast', urgent: false },
+  { id: 'gujarat', title: 'Gujarat Flood Relief - Kutch', urgent: false },
+  { id: 'uttarakhand', title: 'Forest Fire - Uttarakhand', urgent: false },
+  { id: 'manipur', title: 'Earthquake Tremors - Manipur', urgent: false },
   { id: 'general', title: 'General Relief Fund', urgent: false },
 ];
+
 
 const PRESET_AMOUNTS = [100, 500, 1000, 5000, 10000];
 

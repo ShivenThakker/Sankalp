@@ -68,7 +68,13 @@ export default function VolunteerPage() {
 
       <form onSubmit={handleSubmit} className={styles.formContainer}>
         {/* Personal Info */}
-        <section className={styles.section}>
+        <motion.section 
+          className={styles.section}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.sectionTitle}>Personal Information</h2>
           <div className={styles.inputGrid}>
             <div className={styles.inputGroup}>
@@ -127,10 +133,16 @@ export default function VolunteerPage() {
               />
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Skills */}
-        <section className={styles.section}>
+        <motion.section 
+          className={styles.section}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.sectionTitle}>Your Skills</h2>
           <div className={styles.skillsGrid}>
             {SKILLS.map(skill => (
@@ -144,10 +156,16 @@ export default function VolunteerPage() {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Availability */}
-        <section className={styles.section}>
+        <motion.section 
+          className={styles.section}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.sectionTitle}>Availability</h2>
           <div className={styles.radioGroup}>
             <label className={styles.radioLabel}>
@@ -190,10 +208,16 @@ export default function VolunteerPage() {
               </span>
             </label>
           </div>
-        </section>
+        </motion.section>
 
         {/* Additional Info */}
-        <section className={styles.section}>
+        <motion.section 
+          className={styles.section}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.sectionTitle}>Additional Resources</h2>
           <div className={styles.vehicleSection}>
             <label className={styles.toggleLabel}>
@@ -227,7 +251,7 @@ export default function VolunteerPage() {
               )}
             </AnimatePresence>
           </div>
-        </section>
+        </motion.section>
 
         <button type="submit" className={styles.submitBtn}>
           REGISTER AS VOLUNTEER <ArrowRight size={20} />

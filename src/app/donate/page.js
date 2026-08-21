@@ -97,7 +97,13 @@ export default function DonatePage() {
         <form onSubmit={handleDonate} className={styles.formContainer}>
           
           {/* Disaster Selector */}
-          <section className={styles.section}>
+          <motion.section 
+            className={styles.section}
+            initial={{ opacity: 0, y: 40 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, amount: 0.2 }} 
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
             <h2 className={styles.sectionTitle}>Select Cause</h2>
             <div className={styles.disasterGrid}>
               {DISASTERS.map((disaster) => (
@@ -114,10 +120,16 @@ export default function DonatePage() {
                 </div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           {/* Amount Selection */}
-          <section className={styles.section}>
+          <motion.section 
+            className={styles.section}
+            initial={{ opacity: 0, y: 40 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, amount: 0.2 }} 
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
             <h2 className={styles.sectionTitle}>Donation Amount</h2>
             <div className={styles.amountGrid}>
               {PRESET_AMOUNTS.map((amt) => (
@@ -165,10 +177,16 @@ export default function DonatePage() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </section>
+          </motion.section>
 
           {/* Allocation Preference */}
-          <section className={styles.section}>
+          <motion.section 
+            className={styles.section}
+            initial={{ opacity: 0, y: 40 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, amount: 0.2 }} 
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
             <h2 className={styles.sectionTitle}>Allocation Preference (Optional)</h2>
             <div className={styles.allocationGrid}>
               <label className={styles.checkboxLabel}>
@@ -197,10 +215,16 @@ export default function DonatePage() {
                 </label>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           {/* Donor Info */}
-          <section className={styles.section}>
+          <motion.section 
+            className={styles.section}
+            initial={{ opacity: 0, y: 40 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, amount: 0.2 }} 
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
             <h2 className={styles.sectionTitle}>Your Details</h2>
             <div className={styles.donorForm}>
               <div className={styles.inputGroup}>
@@ -235,7 +259,7 @@ export default function DonatePage() {
                 Donate Anonymously
               </label>
             </div>
-          </section>
+          </motion.section>
 
           <button type="submit" className={styles.submitBtn}>
             DONATE ₹{Number(displayAmount).toLocaleString()} <ArrowRight size={20} />
@@ -243,7 +267,13 @@ export default function DonatePage() {
         </form>
 
         {/* Transparency Section */}
-        <section className={styles.transparencySection}>
+        <motion.section 
+          className={styles.transparencySection}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.transparencyTitle}>Where Your Money Goes</h2>
           <div className={styles.barChartContainer}>
             <div className={styles.barChart}>
@@ -257,7 +287,7 @@ export default function DonatePage() {
               <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#ef4444'}}></span>Emergency Reserve</div>
             </div>
           </div>
-        </section>
+        </motion.section>
       </div>
 
       {/* Success Modal */}

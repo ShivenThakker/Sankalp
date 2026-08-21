@@ -72,7 +72,13 @@ export default function RegisterNGOPage() {
 
       <form onSubmit={handleSubmit} className={styles.formContainer}>
         {/* Organization Info */}
-        <section className={styles.section}>
+        <motion.section 
+          className={styles.section}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.sectionTitle}>Organization Info</h2>
           <div className={styles.inputGrid}>
             <div className={styles.inputGroup}>
@@ -137,10 +143,16 @@ export default function RegisterNGOPage() {
               />
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Contact Info */}
-        <section className={styles.section}>
+        <motion.section 
+          className={styles.section}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.sectionTitle}>Contact Info</h2>
           <div className={styles.inputGrid}>
             <div className={styles.inputGroup}>
@@ -219,10 +231,16 @@ export default function RegisterNGOPage() {
               />
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Capabilities */}
-        <section className={styles.section}>
+        <motion.section 
+          className={styles.section}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.sectionTitle}>Capabilities</h2>
           <div className={styles.capabilitiesGrid}>
             {CAPABILITIES.map(cap => (
@@ -236,10 +254,16 @@ export default function RegisterNGOPage() {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Documents Upload */}
-        <section className={styles.section}>
+        <motion.section 
+          className={styles.section}
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, amount: 0.2 }} 
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className={styles.sectionTitle}>Documents Upload</h2>
           <p className={styles.helperText}>Please upload valid PDF or image files for verification.</p>
           <div className={styles.inputGrid}>
@@ -260,7 +284,7 @@ export default function RegisterNGOPage() {
               <input type="file" accept=".pdf,.jpg,.jpeg,.png" />
             </div>
           </div>
-        </section>
+        </motion.section>
 
         <button type="submit" className={styles.submitBtn}>
           SUBMIT FOR VERIFICATION <ArrowRight size={20} />

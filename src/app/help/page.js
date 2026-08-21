@@ -87,7 +87,13 @@ export default function HelpPage() {
         <p className={styles.subtitle}>Tell us what you need. We'll find verified help near you.</p>
       </header>
 
-      <section className={styles.section}>
+      <motion.section 
+        className={styles.section}
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true, amount: 0.2 }} 
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         <h2 className={styles.sectionTitle}>What do you need? (Select all that apply)</h2>
         <div className={styles.needsGrid}>
           {NEEDS.map((need) => (
@@ -102,9 +108,15 @@ export default function HelpPage() {
             </motion.button>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      <section className={styles.section}>
+      <motion.section 
+        className={styles.section}
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true, amount: 0.2 }} 
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         <h2 className={styles.sectionTitle}>How many people?</h2>
         <div className={styles.peopleRow}>
           {PEOPLE.map((p) => (
@@ -117,9 +129,15 @@ export default function HelpPage() {
             </button>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      <section className={styles.section}>
+      <motion.section 
+        className={styles.section}
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true, amount: 0.2 }} 
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         <h2 className={styles.sectionTitle}>Urgency</h2>
         <div className={styles.urgencyRow}>
           {URGENCY.map((u) => (
@@ -132,9 +150,15 @@ export default function HelpPage() {
             </button>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      <section className={styles.section}>
+      <motion.section 
+        className={styles.section}
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true, amount: 0.2 }} 
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         <h2 className={styles.sectionTitle}>Location</h2>
         <div className={styles.locationBox}>
           {locationStatus === 'getting' && (
@@ -156,9 +180,15 @@ export default function HelpPage() {
             </div>
           )}
         </div>
-      </section>
+      </motion.section>
 
-      <section className={styles.section}>
+      <motion.section 
+        className={styles.section}
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true, amount: 0.2 }} 
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         <h2 className={styles.sectionTitle}>Contact Phone (Optional)</h2>
         <div className={styles.inputWrapper}>
           <Phone className={styles.inputIcon} size={20} />
@@ -173,7 +203,7 @@ export default function HelpPage() {
             className={styles.inputWithIcon}
           />
         </div>
-      </section>
+      </motion.section>
 
       <motion.button 
         whileTap={isFormValid ? { scale: 0.95 } : {}}

@@ -4,17 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
 import { 
-  AlertTriangle, 
-  Search, 
   CheckCircle, 
-  ClipboardList, 
-  Building2, 
-  Users, 
-  IndianRupee, 
-  MapPin, 
-  Shield, 
-  Heart, 
-  HandHelping, 
   ArrowRight,
   Check
 } from 'lucide-react';
@@ -52,223 +42,236 @@ const CountUp = ({ end, duration = 2, prefix = '', suffix = '' }) => {
 };
 
 export default function LandingPage() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 }
-    }
-  };
+  const alerts = [
+    { id: 4, title: 'Kerala Landslides', emoji: '⛰️', severity: 'HIGH', location: 'Wayanad', districts: 'Wayanad', pop: '20,000+', type: 'high' },
+    { id: 5, title: 'Gujarat Flood Relief', emoji: '🌊', severity: 'MODERATE', location: 'Kutch', districts: 'Kutch', pop: '15,000+', type: 'mod' },
+    { id: 6, title: 'Earthquake Tremors', emoji: '💥', severity: 'MODERATE', location: 'Manipur', districts: 'Imphal', pop: '5,000+', type: 'mod' },
+    { id: 1, title: 'Assam Floods', emoji: '🌊', severity: 'HIGH', location: 'Kamrup', districts: 'Kamrup, Nagaon', pop: '50,000+', type: 'high' },
+    { id: 2, title: 'Cyclone Warning', emoji: '🌀', severity: 'MODERATE', location: 'Odisha coast', districts: 'Puri, Ganjam', pop: '100,000+', type: 'mod' },
+    { id: 3, title: 'Forest Fire', emoji: '🔥', severity: 'LOW', location: 'Uttarakhand', districts: 'Almora', pop: '1,000+', type: 'low' }
+  ];
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
+  const steps = [
+    { num: '01', icon: '🆘', title: 'Request Help', desc: 'Citizens report what they need. AI categorizes requirements.' },
+    { num: '02', icon: '🤖', title: 'AI Matching', desc: 'Our matching engine finds and scores the nearest verified responders.' },
+    { num: '03', icon: '✅', title: 'Verified Response', desc: 'Matched NGO responds and relief reaches those who need it.' }
+  ];
+
+  const trustParams = ['Registration', 'DARPAN', 'PAN', '80G', 'FCRA', 'Address', 'History', 'Activity'];
 
   return (
     <div className={styles.pageContainer}>
+      
       {/* HERO SECTION */}
-      <section className={styles.hero}>
-        <div className={styles.heroBackground} />
-        <motion.div 
-          className={styles.heroContent}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className={styles.heroTitle}>When Disaster Strikes, Every Second Counts.</h1>
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className={styles.heroSection}
+      >
+        <div className={styles.heroContent}>
+          <span className={styles.sectionBadge}>✦ DISASTER RELIEF COORDINATION</span>
+          <h1 className={[styles.serifHeading, styles.heroTitle].join(' ')}>Connecting help where it's needed most</h1>
           <p className={styles.heroSubtitle}>
-            India's verified disaster relief coordination platform. Connecting affected citizens with verified NGOs, donors, and volunteers in real-time.
+            India's first AI-powered disaster relief platform. Connecting affected citizens with verified NGOs, donors, and volunteers in real-time.
           </p>
           <div className={styles.heroButtons}>
-            <Link href="/help" className={styles.btnDanger}>
-              🆘 I Need Help
+            <Link href="/help" className={styles.btnPrimary}>
+              I Need Help
             </Link>
-            <Link href="/volunteer" className={styles.btnPrimary}>
-              I Want to Help
+            <Link href="/dashboard/admin" className={styles.btnSecondary}>
+              View Dashboard
             </Link>
           </div>
-        </motion.div>
-      </section>
+          <div className={styles.statsRow}>
+            <div className={styles.statItem}>
+              <div className={styles.statValue}><CountUp end={6} /></div>
+              <div className={styles.statLabel}>Active Disasters</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue}><CountUp end={142} /></div>
+              <div className={styles.statLabel}>NGOs Verified</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue}><CountUp end={2340} suffix="+" /></div>
+              <div className={styles.statLabel}>Requests Resolved</div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
 
-      {/* ACTIVE ALERTS BANNER */}
-      <section className={styles.alertsSection}>
-        <div className={styles.alertsScroll}>
-          {[
-            
-            { id: 4, title: '⛰️ Kerala Landslides', severity: 'HIGH', location: 'Wayanad', date: 'Aug 2026', type: 'high' },
-            { id: 5, title: '🌊 Gujarat Flood Relief', severity: 'MODERATE', location: 'Kutch', date: 'Aug 2026', type: 'mod' },
-            { id: 6, title: '💥 Earthquake Tremors', severity: 'MODERATE', location: 'Manipur', date: 'Aug 2026', type: 'mod' },
-{ id: 1, title: '🌊 Assam Floods', severity: 'HIGH', location: 'Kamrup, Nagaon districts', date: 'Aug 2026', type: 'high' },
-            { id: 2, title: '🌀 Cyclone Warning', severity: 'MODERATE', location: 'Odisha coast', date: 'Aug 2026', type: 'mod' },
-            { id: 3, title: '🔥 Forest Fire', severity: 'LOW', location: 'Uttarakhand', date: 'Aug 2026', type: 'low' }
-          ].map((alert, idx) => (
+      {/* ACTIVE ALERTS SECTION */}
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className={styles.section}
+      >
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionBadge}>⚡ LIVE ALERTS</span>
+          <h2 className={[styles.serifHeading, styles.sectionTitle].join(' ')}>Active disaster alerts</h2>
+        </div>
+        <div className={styles.alertsGrid}>
+          {alerts.map((alert, index) => (
             <motion.div
               key={alert.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 + idx * 0.1 }}
-            >
-              <Link href="/disasters" className={`${styles.glassCard} ${styles.alertCard} ${alert.type === 'high' ? styles.alertHigh : alert.type === 'mod' ? styles.alertMod : styles.alertLow}`}>
-                <div className={styles.alertHeader}>
-                  <h3 className={styles.alertTitle}>{alert.title}</h3>
-                  <span className={`${styles.alertBadge} ${alert.type === 'high' ? styles.badgeHigh : alert.type === 'mod' ? styles.badgeMod : styles.badgeLow}`}>
-                    {alert.severity}
-                  </span>
-                </div>
-                <div className={styles.alertBody}>
-                  <span>📍 {alert.location}</span>
-                  <span>🗓️ {alert.date}</span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>How Sankalp Works</h2>
-          <p className={styles.sectionSubtitle}>Seamlessly coordinating relief efforts from alert to delivery.</p>
-        </div>
-        <motion.div 
-          className={styles.stepsGrid}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          {[
-            { icon: AlertTriangle, title: 'Disaster Detected', desc: 'SACHET alerts trigger our system automatically' },
-            { icon: ClipboardList, title: 'Needs Identified', desc: 'Citizens report what they need. AI categorizes requirements.' },
-            { icon: Search, title: 'NGOs Matched', desc: 'Our matching engine finds the nearest verified responders.' },
-            { icon: CheckCircle, title: 'Help Delivered', desc: 'Relief reaches those who need it, tracked transparently.' }
-          ].map((step, idx) => (
-            <motion.div key={idx} variants={itemVariants} className={`${styles.glassCard} ${styles.stepCard}`}>
-              <div className={styles.stepIcon}>
-                <step.icon size={32} />
-              </div>
-              <h3 className={styles.stepTitle}>{step.title}</h3>
-              <p className={styles.stepDesc}>{step.desc}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* IMPACT STATS */}
-      <section className={styles.section}>
-        <motion.div 
-          className={styles.statsGrid}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {[
-            { icon: Building2, end: 142, label: 'Verified NGOs', suffix: '' },
-            { icon: Users, end: 2340, label: 'Volunteers Registered', suffix: '+' },
-            { icon: IndianRupee, end: 12, label: 'Donations Tracked', prefix: '₹', suffix: ' Cr' },
-            { icon: MapPin, end: 47, label: 'Active Districts', suffix: '' }
-          ].map((stat, idx) => (
-            <motion.div key={idx} variants={itemVariants} className={`${styles.glassCard} ${styles.statCard}`}>
-              <stat.icon size={32} className={styles.ctaIcon} style={{ margin: '0 auto' }} />
-              <div className={styles.statValue}>
-                <CountUp end={stat.end} prefix={stat.prefix} suffix={stat.suffix} />
-              </div>
-              <div className={styles.statLabel}>{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* FOR DISTRICT COLLECTORS */}
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Built for Decision Makers</h2>
-          <p className={styles.sectionSubtitle}>Sankalp gives District Collectors a real-time command center for disaster response coordination.</p>
-        </div>
-        <div className={styles.featuresGrid}>
-          {[
-            { icon: '📊', title: 'Resource Gap Analysis', desc: "See exactly what's covered and what's critically short across your district" },
-            { icon: '🏢', title: 'Unified NGO View', desc: 'Every verified organization, their capabilities, and current resources in one dashboard' },
-            { icon: '⚡', title: 'Smart Assignment', desc: 'AI-powered matching connects needs to the nearest capable responder' }
-          ].map((feat, idx) => (
-            <motion.div 
-              key={idx}
-              className={`${styles.glassCard} ${styles.featureCard}`}
-              whileHover={{ y: -8 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className={styles.featureIcon}>{feat.icon}</div>
-              <h3 className={styles.stepTitle}>{feat.title}</h3>
-              <p className={styles.stepDesc}>{feat.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* TRUST & VERIFICATION */}
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Trust & Verification</h2>
-          <p className={styles.sectionSubtitle}>Ensuring only verified organizations handle crucial relief operations.</p>
-        </div>
-        <div className={styles.pipeline}>
-          {['Registration', 'DARPAN ID', 'PAN Verification', 'Address Check', 'Activity History', 'Verification Score'].map((step, idx) => (
-            <motion.div 
-              key={idx}
-              className={styles.pipelineStep}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className={[
+                styles.alertCard, 
+                alert.type === 'high' ? styles.borderRed : 
+                alert.type === 'mod' ? styles.borderOrange : 
+                styles.borderGreen
+              ].join(' ')}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Check className={styles.pipelineIcon} size={24} />
-              <span className={styles.pipelineText}>{step}</span>
+              <div className={styles.alertHeader}>
+                <div className={styles.alertTitleWrapper}>
+                  <span className={styles.alertEmoji}>{alert.emoji}</span>
+                  <h3 className={styles.alertTitle}>{alert.title}</h3>
+                </div>
+                <span className={[
+                  styles.severityBadge, 
+                  alert.type === 'high' ? styles.badgeRed : 
+                  alert.type === 'mod' ? styles.badgeOrange : 
+                  styles.badgeGreen
+                ].join(' ')}>
+                  {alert.severity}
+                </span>
+              </div>
+              <div className={styles.alertBody}>
+                <p><strong>Affected:</strong> {alert.pop}</p>
+                <p><strong>Districts:</strong> {alert.districts}</p>
+              </div>
             </motion.div>
           ))}
         </div>
-        <div className={styles.trustBadge}>
-          <div className={styles.trustBadgeInner}>
-            <Shield size={20} />
-            <span>🟢 DOCUMENTS VERIFIED — Score: 91/100</span>
-          </div>
-        </div>
-      </section>
+      </motion.section>
 
-      {/* BOTTOM CTA */}
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Join the Network</h2>
+      {/* HOW IT WORKS SECTION */}
+      <div className={styles.bgSubtle}>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className={styles.section}
+        >
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionBadge}>✦ HOW IT WORKS</span>
+            <h2 className={[styles.serifHeading, styles.sectionTitle].join(' ')}>Three steps to verified relief</h2>
+          </div>
+          <div className={styles.stepsGrid}>
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                className={styles.stepCard}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div className={styles.stepHeader}>
+                  <span className={styles.stepNumber}>{step.num}</span>
+                  <span className={styles.stepIcon}>{step.icon}</span>
+                </div>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
+                <p className={styles.stepDesc}>{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+      </div>
+
+      {/* DC COMMAND CENTER SECTION */}
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className={styles.section}
+      >
+        <div className={styles.dcContainer}>
+          <div className={styles.dcContent}>
+            <span className={styles.sectionBadge}>🏛️ FOR DISTRICT COLLECTORS</span>
+            <h2 className={[styles.serifHeading, styles.sectionTitle].join(' ')}>
+              One dashboard. <span className={styles.italicText}>Complete visibility.</span>
+            </h2>
+            <p className={styles.dcDesc}>
+              Sankalp gives District Collectors a real-time command center for disaster response coordination.
+            </p>
+            <ul className={styles.dcList}>
+              <li><CheckCircle className={styles.checkIcon} size={20} /> Resource gap analysis</li>
+              <li><CheckCircle className={styles.checkIcon} size={20} /> Real-time request feed</li>
+              <li><CheckCircle className={styles.checkIcon} size={20} /> NGO coordination</li>
+              <li><CheckCircle className={styles.checkIcon} size={20} /> Donation tracking</li>
+            </ul>
+            <Link href="/dashboard/admin" className={styles.linkWithIcon}>
+              Open Command Center <ArrowRight size={18} />
+            </Link>
+          </div>
         </div>
-        <div className={styles.bottomCtaGrid}>
-          <div className={`${styles.glassCard} ${styles.ctaCard}`}>
-            <Building2 size={40} className={styles.ctaIcon} />
-            <h3 className={styles.stepTitle}>Register as NGO</h3>
-            <p className={styles.stepDesc}>Join our verified network to coordinate relief efforts effectively.</p>
-            <Link href="/ngo-register" className={styles.btnSecondary}>
-              Register <ArrowRight size={18} />
+      </motion.section>
+
+      {/* TRUST PIPELINE SECTION */}
+      <div className={styles.bgSubtle}>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className={styles.section}
+        >
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionBadge}>🔍 TRUST & VERIFICATION</span>
+            <h2 className={[styles.serifHeading, styles.sectionTitle].join(' ')}>Every NGO, verified</h2>
+          </div>
+          <div className={styles.trustGrid}>
+            {trustParams.map((step, index) => (
+              <motion.div
+                key={index}
+                className={styles.trustCard}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <Check className={styles.trustIcon} size={20} />
+                <span className={styles.trustText}>{step}</span>
+              </motion.div>
+            ))}
+          </div>
+          <div className={styles.trustCtaContainer}>
+            <Link href="/ngos" className={styles.linkWithIcon}>
+              Browse Verified NGOs <ArrowRight size={18} />
             </Link>
           </div>
-          <div className={`${styles.glassCard} ${styles.ctaCard}`}>
-            <HandHelping size={40} className={styles.ctaIcon} />
-            <h3 className={styles.stepTitle}>Volunteer</h3>
-            <p className={styles.stepDesc}>Offer your skills and time to help communities in need.</p>
-            <Link href="/volunteer" className={styles.btnSecondary}>
-              Sign Up <ArrowRight size={18} />
+        </motion.section>
+      </div>
+
+      {/* CTA SECTION */}
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className={styles.ctaSection}
+      >
+        <div className={styles.ctaContent}>
+          <h2 className={[styles.serifHeading, styles.ctaTitle].join(' ')}>Ready to make a difference?</h2>
+          <div className={styles.ctaButtons}>
+            <Link href="/help" className={styles.btnWhite}>
+              I Need Help
             </Link>
-          </div>
-          <div className={`${styles.glassCard} ${styles.ctaCard}`}>
-            <Heart size={40} className={styles.ctaIcon} />
-            <h3 className={styles.stepTitle}>Donate</h3>
-            <p className={styles.stepDesc}>Fund critical relief operations through our verified partners.</p>
-            <Link href="/donate" className={styles.btnSecondary}>
-              Contribute <ArrowRight size={18} />
+            <Link href="/donate" className={styles.btnWhiteOutline}>
+              Donate Now
             </Link>
           </div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 }

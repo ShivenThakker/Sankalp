@@ -17,6 +17,7 @@ export default function Navbar() {
     { name: 'NGOs', href: '/ngos' },
     { name: 'Donate', href: '/donate' },
     { name: 'Volunteer', href: '/volunteer' },
+    { name: 'Register NGO', href: '/register-ngo' },
   ];
 
   return (

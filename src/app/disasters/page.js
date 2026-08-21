@@ -9,6 +9,47 @@ import styles from './page.module.css';
 
 export const MOCK_DISASTERS = [
   {
+    id: '4', title: 'Kerala Landslides - Wayanad', type: 'landslide', severity: 'high',
+    description: 'Massive landslides triggered by heavy rainfall have hit Wayanad and Kozhikode districts, causing widespread damage to property and isolating villages.',
+    affectedDistricts: ['Wayanad', 'Kozhikode'], affectedStates: ['Kerala'],
+    centerLat: 11.6854, centerLng: 76.1320, radiusKm: 25,
+    affectedPopulation: 30000, source: 'NDRF', status: 'active',
+    startedAt: '2026-08-20T02:00:00Z',
+    needs: [
+      { type: 'rescue', needed: 150, fulfilled: 80, priority: 'critical' },
+      { type: 'medical', needed: 300, fulfilled: 100, priority: 'critical' },
+      { type: 'shelter', needed: 1500, fulfilled: 600, priority: 'high' }
+    ],
+    ngosActive: 15, volunteerCount: 220, donationsRaised: 850000
+  },
+  {
+    id: '5', title: 'Gujarat Flood Relief - Kutch', type: 'flood', severity: 'moderate',
+    description: 'Unseasonal heavy rains have flooded parts of Kutch and Patan, requiring immediate relief materials and water pumping.',
+    affectedDistricts: ['Kutch', 'Patan'], affectedStates: ['Gujarat'],
+    centerLat: 23.7337, centerLng: 69.8597, radiusKm: 60,
+    affectedPopulation: 25000, source: 'SDMA', status: 'active',
+    startedAt: '2026-08-19T10:00:00Z',
+    needs: [
+      { type: 'food', needed: 2500, fulfilled: 1200, priority: 'medium' },
+      { type: 'water', needed: 5000, fulfilled: 3000, priority: 'high' }
+    ],
+    ngosActive: 8, volunteerCount: 110, donationsRaised: 320000
+  },
+  {
+    id: '6', title: 'Earthquake Tremors - Manipur', type: 'earthquake', severity: 'moderate',
+    description: 'A 5.4 magnitude earthquake struck Manipur, causing minor structural damages and panic among residents.',
+    affectedDistricts: ['Imphal East', 'Imphal West', 'Churachandpur'], affectedStates: ['Manipur'],
+    centerLat: 24.8170, centerLng: 93.9368, radiusKm: 40,
+    affectedPopulation: 15000, source: 'ISC', status: 'monitoring',
+    startedAt: '2026-08-21T04:30:00Z',
+    needs: [
+      { type: 'shelter', needed: 500, fulfilled: 200, priority: 'medium' },
+      { type: 'medical', needed: 100, fulfilled: 50, priority: 'low' }
+    ],
+    ngosActive: 4, volunteerCount: 45, donationsRaised: 120000
+  },
+
+  {
     id: '1', title: 'Assam Floods August 2026', type: 'flood', severity: 'high',
     description: 'Heavy monsoon rains have caused severe flooding across multiple districts in Assam. The Brahmaputra river has breached its banks affecting lakhs of people.',
     affectedDistricts: ['Kamrup', 'Nagaon', 'Darrang', 'Morigaon', 'Barpeta'],

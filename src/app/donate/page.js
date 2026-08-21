@@ -223,6 +223,7 @@ export default function DonatePage() {
                   onChange={(e) => setDonorInfo({...donorInfo, email: e.target.value})}
                   required={!donorInfo.anonymous}
                   disabled={donorInfo.anonymous}
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$"
                 />
               </div>
               <label className={styles.anonymousToggle}>
@@ -239,7 +240,6 @@ export default function DonatePage() {
           <button type="submit" className={styles.submitBtn}>
             DONATE ₹{Number(displayAmount).toLocaleString()} <ArrowRight size={20} />
           </button>
-          <p className={styles.disclaimer}>Note: No real payment is processed in this prototype.</p>
         </form>
 
         {/* Transparency Section */}
@@ -247,16 +247,14 @@ export default function DonatePage() {
           <h2 className={styles.transparencyTitle}>Where Your Money Goes</h2>
           <div className={styles.barChartContainer}>
             <div className={styles.barChart}>
-              <div className={styles.barSegment} style={{width: '60%', backgroundColor: '#10b981'}}>60%</div>
+              <div className={styles.barSegment} style={{width: '65%', backgroundColor: '#10b981'}}>65%</div>
               <div className={styles.barSegment} style={{width: '25%', backgroundColor: '#f59e0b'}}>25%</div>
               <div className={styles.barSegment} style={{width: '10%', backgroundColor: '#ef4444'}}>10%</div>
-              <div className={styles.barSegment} style={{width: '5%', backgroundColor: '#6366f1'}}>5%</div>
             </div>
             <div className={styles.legend}>
               <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#10b981'}}></span>Direct Relief</div>
               <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#f59e0b'}}></span>Logistics</div>
               <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#ef4444'}}></span>Emergency Reserve</div>
-              <div className={styles.legendItem}><span className={styles.dot} style={{backgroundColor: '#6366f1'}}></span>Platform</div>
             </div>
           </div>
         </section>

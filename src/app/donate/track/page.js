@@ -14,10 +14,9 @@ const MOCK_DONATIONS = [
     disaster: 'Assam Floods August 2026',
     status: 'allocated',
     allocations: [
-      { category: 'Food Kits', amount: 2000, ngo: 'Assam Relief Foundation', status: 'delivered', icon: '🍚' },
+      { category: 'Food Kits', amount: 2500, ngo: 'Assam Relief Foundation', status: 'delivered', icon: '🍚' },
       { category: 'Medical Supplies', amount: 1500, ngo: 'Health First India', status: 'in_transit', icon: '💊' },
       { category: 'Emergency Reserve', amount: 1000, ngo: 'Sankalp Pool', status: 'reserved', icon: '🏦' },
-      { category: 'Platform Operations', amount: 500, ngo: 'Sankalp', status: 'allocated', icon: '⚙️' },
     ]
   },
   {
@@ -27,9 +26,8 @@ const MOCK_DONATIONS = [
     disaster: 'Cyclone Warning - Odisha Coast',
     status: 'pending',
     allocations: [
-      { category: 'Shelter Materials', amount: 600, ngo: 'Pending Assignment', status: 'pending', icon: '🏠' },
+      { category: 'Shelter Materials', amount: 650, ngo: 'Pending Assignment', status: 'pending', icon: '🏠' },
       { category: 'Transport', amount: 350, ngo: 'Pending Assignment', status: 'pending', icon: '🚗' },
-      { category: 'Platform Operations', amount: 50, ngo: 'Sankalp', status: 'allocated', icon: '⚙️' },
     ]
   }
 ];
@@ -142,9 +140,7 @@ export default function TrackDonationPage() {
               })}
             </div>
 
-            <div className={styles.disclaimer}>
-              ⚠️ This is a prototype demonstration. In production, donation tracking would be linked to real-time NGO disbursement data.
-            </div>
+
           </motion.div>
         )}
       </motion.div>

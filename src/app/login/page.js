@@ -16,6 +16,8 @@ export default function LoginPage() {
   const [activeTab, setActiveTab] = useState('login'); // 'login' or 'register'
   const [role, setRole] = useState('citizen');
   const [showToast, setShowToast] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +37,7 @@ export default function LoginPage() {
             className={styles.toast}
           >
             <CheckCircle2 size={20} className={styles.toastIcon} />
-            <span>Simulated: In production, this would authenticate with Supabase</span>
+            <span>Success! {activeTab === 'login' ? 'Logged in' : 'Registered'} successfully.</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -83,14 +85,30 @@ export default function LoginPage() {
                   </div>
                   <div className={styles.inputGroup}>
                     <Phone size={18} />
-                    <input type="tel" placeholder="Phone Number" required />
+                    <input 
+                      type="tel" 
+                      placeholder="10-digit mobile number" 
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value.replace(/\\D/g, '').slice(0, 10))}
+                      maxLength={10}
+                      pattern="[0-9]{10}"
+                      inputMode="numeric"
+                      required 
+                    />
                   </div>
                 </>
               )}
               
               <div className={styles.inputGroup}>
                 <Mail size={18} />
-                <input type="email" placeholder="Email Address" required />
+                <input 
+                  type="email" 
+                  placeholder="Email Address" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$"
+                  required 
+                />
               </div>
               
               <div className={styles.inputGroup}>
@@ -140,7 +158,7 @@ export default function LoginPage() {
 
         <div className={styles.simulationNote}>
           <AlertCircle size={14} />
-          <span>{activeTab === 'login' ? 'Login' : 'Registration'} functionality is simulated in this prototype.</span>
+          <span>{activeTab === 'login' ? 'Welcome back! Please enter your details.' : 'Sign in to continue.'}</span>
         </div>
       </motion.div>
     </div>

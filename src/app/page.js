@@ -95,7 +95,11 @@ export default function LandingPage() {
       <section className={styles.alertsSection}>
         <div className={styles.alertsScroll}>
           {[
-            { id: 1, title: '🌊 Assam Floods', severity: 'HIGH', location: 'Kamrup, Nagaon districts', date: 'Aug 2026', type: 'high' },
+            
+            { id: 4, title: '⛰️ Kerala Landslides', severity: 'HIGH', location: 'Wayanad', date: 'Aug 2026', type: 'high' },
+            { id: 5, title: '🌊 Gujarat Flood Relief', severity: 'MODERATE', location: 'Kutch', date: 'Aug 2026', type: 'mod' },
+            { id: 6, title: '💥 Earthquake Tremors', severity: 'MODERATE', location: 'Manipur', date: 'Aug 2026', type: 'mod' },
+{ id: 1, title: '🌊 Assam Floods', severity: 'HIGH', location: 'Kamrup, Nagaon districts', date: 'Aug 2026', type: 'high' },
             { id: 2, title: '🌀 Cyclone Warning', severity: 'MODERATE', location: 'Odisha coast', date: 'Aug 2026', type: 'mod' },
             { id: 3, title: '🔥 Forest Fire', severity: 'LOW', location: 'Uttarakhand', date: 'Aug 2026', type: 'low' }
           ].map((alert, idx) => (

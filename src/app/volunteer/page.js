@@ -25,8 +25,8 @@ export default function VolunteerPage() {
     name: '',
     phone: '',
     email: '',
-    state: 'Assam',
-    district: 'Guwahati'
+    state: '',
+    district: ''
   });
 
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -85,9 +85,12 @@ export default function VolunteerPage() {
               <Phone size={18} />
               <input
                 type="tel"
-                placeholder="Phone Number"
+                placeholder="10-digit mobile number"
                 value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\\D/g, '').slice(0, 10)})}
+                maxLength={10}
+                pattern="[0-9]{10}"
+                inputMode="numeric"
                 required
               />
             </div>
@@ -98,22 +101,30 @@ export default function VolunteerPage() {
                 placeholder="Email Address"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$"
                 required
               />
             </div>
             <div className={styles.inputGroup}>
               <MapPin size={18} />
               <select 
+                value={formData.state}
+                onChange={(e) => setFormData({...formData, state: e.target.value})}
+                required
+              >
+                <option value="">Select State</option>
+                {['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'].map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
+            <div className={styles.inputGroup}>
+              <MapPin size={18} />
+              <input 
+                type="text"
+                placeholder="District"
                 value={formData.district}
                 onChange={(e) => setFormData({...formData, district: e.target.value})}
                 required
-              >
-                <option value="Guwahati">Guwahati, Assam</option>
-                <option value="Silchar">Silchar, Assam</option>
-                <option value="Dibrugarh">Dibrugarh, Assam</option>
-                <option value="Jorhat">Jorhat, Assam</option>
-                <option value="Nagaon">Nagaon, Assam</option>
-              </select>
+              />
             </div>
           </div>
         </section>

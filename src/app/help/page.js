@@ -165,8 +165,11 @@ export default function HelpPage() {
           <input 
             type="tel" 
             value={phone} 
-            onChange={(e) => setPhone(e.target.value)} 
-            placeholder="Your phone number" 
+            onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))} 
+            placeholder="10-digit mobile number"
+            maxLength={10}
+            pattern="[0-9]{10}"
+            inputMode="numeric"
             className={styles.inputWithIcon}
           />
         </div>

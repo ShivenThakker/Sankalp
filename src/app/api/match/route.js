@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
 
 const NGO_POOL = [
+  { id: '17', name: 'Goonj', lat: 28.5355, lng: 77.2510, verificationScore: 95, capabilities: ['clothing', 'food', 'shelter'], resources: { food_kits: 1500, tents: 200 }, phone: '+91-99999-11111', address: 'New Delhi', lastUpdated: Date.now() - 3600000 },
+  { id: '18', name: 'Mercy Corps India', lat: 17.3850, lng: 78.4867, verificationScore: 92, capabilities: ['food', 'water', 'shelter', 'medical'], resources: { food_kits: 2000, water_litres: 10000 }, phone: '+91-99999-22222', address: 'Hyderabad', lastUpdated: Date.now() - 3600000 },
+  { id: '19', name: 'SEEDS India', lat: 28.6139, lng: 77.2090, verificationScore: 89, capabilities: ['shelter', 'rescue', 'food'], resources: { tents: 150 }, phone: '+91-99999-33333', address: 'New Delhi', lastUpdated: Date.now() - 3600000 },
+  { id: '20', name: 'Kolkata Rescue Foundation', lat: 22.5726, lng: 88.3639, verificationScore: 83, capabilities: ['rescue', 'medical', 'shelter'], resources: { doctors: 4, tents: 50 }, phone: '+91-99999-44444', address: 'Kolkata', lastUpdated: Date.now() - 3600000 },
+  { id: '21', name: 'Bengal Relief Corps', lat: 22.5449, lng: 88.3426, verificationScore: 79, capabilities: ['food', 'water', 'transport'], resources: { vehicles: 10, food_kits: 500 }, phone: '+91-99999-55555', address: 'Kolkata', lastUpdated: Date.now() - 3600000 },
+  { id: '22', name: 'Howrah Hope Foundation', lat: 22.5958, lng: 88.2636, verificationScore: 76, capabilities: ['shelter', 'clothing'], resources: { tents: 40 }, phone: '+91-99999-66666', address: 'Howrah', lastUpdated: Date.now() - 3600000 },
+  { id: '23', name: 'Oxfam India', lat: 28.6448, lng: 77.2167, verificationScore: 94, capabilities: ['food', 'water', 'shelter', 'medical'], resources: { water_litres: 20000, food_kits: 3000 }, phone: '+91-99999-77777', address: 'New Delhi', lastUpdated: Date.now() - 3600000 },
+  { id: '24', name: 'CARE India', lat: 28.5921, lng: 77.2270, verificationScore: 93, capabilities: ['food', 'medical', 'shelter'], resources: { food_kits: 2500, doctors: 10 }, phone: '+91-99999-88888', address: 'New Delhi', lastUpdated: Date.now() - 3600000 },
+
   { id: '1', name: 'Assam Relief Foundation', lat: 26.18, lng: 91.75, verificationScore: 91, capabilities: ['food', 'water', 'shelter'], resources: { food_kits: 500, water_litres: 2000, beds: 80 }, phone: '+91-98765-43210', address: 'MG Road, Guwahati', lastUpdated: Date.now() - 4 * 3600000 },
   { id: '2', name: 'Health First India', lat: 26.15, lng: 91.78, verificationScore: 87, capabilities: ['medical'], resources: { doctors: 3, medical_kits: 120 }, phone: '+91-98765-11111', address: 'GS Road, Guwahati', lastUpdated: Date.now() - 24 * 3600000 },
   { id: '3', name: 'Shelter Now India', lat: 26.11, lng: 91.70, verificationScore: 78, capabilities: ['shelter', 'clothing'], resources: { beds: 80, tents: 25 }, phone: '+91-98765-22222', address: 'Zoo Road, Guwahati', lastUpdated: Date.now() - 48 * 3600000 },

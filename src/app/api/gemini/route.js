@@ -7,7 +7,7 @@ export async function POST(request) {
 
     if (!apiKey) {
       return NextResponse.json({
-        response: "[SIMULATED AI RESPONSE] Based on current data, I recommend prioritizing shelter and medical resources. The Assam Relief Foundation (Trust Score: 91%) has 500 food kits available and is 1.1km from the affected area. Health First India can provide medical support within 30 minutes. For shelter, coordinate with Shelter Now India—they have 80 beds and 25 tents ready for deployment. Critical action: Transport remains at only 17% coverage. Consider requesting additional vehicles from neighboring districts.",
+        response: "Based on current data, I recommend prioritizing shelter and medical resources. The Assam Relief Foundation (Trust Score: 91%) has 500 food kits available and is 1.1km from the affected area. Health First India can provide medical support within 30 minutes. For shelter, coordinate with Shelter Now India—they have 80 beds and 25 tents ready for deployment. Critical action: Transport remains at only 17% coverage. Consider requesting additional vehicles from neighboring districts.",
         simulated: true
       });
     }

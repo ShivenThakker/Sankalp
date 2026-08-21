@@ -23,6 +23,37 @@ const getSeverityColor = (severity) => {
   }
 };
 
+const DisasterMarker = ({ disaster, onMarkerClick }) => {
+  const map = useMap();
+  return (
+    <CircleMarker
+      center={[disaster.centerLat, disaster.centerLng]}
+      pathOptions={{ 
+        color: getSeverityColor(disaster.severity),
+        fillColor: getSeverityColor(disaster.severity),
+        fillOpacity: 0.2
+      }}
+      radius={Math.max((disaster.radiusKm * 200) / 1000, 10)}
+      eventHandlers={{
+        click: () => {
+          map.flyTo([disaster.centerLat, disaster.centerLng], 9, { duration: 1.5 });
+          onMarkerClick(disaster, 'disaster');
+        },
+      }}
+    >
+      <Popup>
+        <div className={styles.popupContent}>
+          <h3>{disaster.title}</h3>
+          <p><strong>Severity:</strong> <span style={{ color: getSeverityColor(disaster.severity) }}>{disaster.severity}</span></p>
+          <p><strong>Type:</strong> {disaster.type}</p>
+          <p><strong>Affected:</strong> {disaster.affectedPopulation?.toLocaleString()}</p>
+          <p><strong>Radius:</strong> {disaster.radiusKm} km</p>
+        </div>
+      </Popup>
+    </CircleMarker>
+  );
+};
+
 const DisasterMap = ({
   disasters = [],
   ngos = [],
@@ -41,36 +72,18 @@ const DisasterMap = ({
         className={styles.map}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           className={styles.darkTile}
         />
         
         {/* Disaster Areas */}
         {disasters.map((disaster) => (
-          <CircleMarker
+          <DisasterMarker
             key={disaster.id || disaster.title}
-            center={[disaster.centerLat, disaster.centerLng]}
-            pathOptions={{ 
-              color: getSeverityColor(disaster.severity),
-              fillColor: getSeverityColor(disaster.severity),
-              fillOpacity: 0.2
-            }}
-            radius={Math.max((disaster.radiusKm * 200) / 1000, 10)}
-            eventHandlers={{
-              click: () => onMarkerClick(disaster, 'disaster'),
-            }}
-          >
-            <Popup>
-              <div className={styles.popupContent}>
-                <h3>{disaster.title}</h3>
-                <p><strong>Severity:</strong> <span style={{ color: getSeverityColor(disaster.severity) }}>{disaster.severity}</span></p>
-                <p><strong>Type:</strong> {disaster.type}</p>
-                <p><strong>Affected:</strong> {disaster.affectedPopulation?.toLocaleString()}</p>
-                <p><strong>Radius:</strong> {disaster.radiusKm} km</p>
-              </div>
-            </Popup>
-          </CircleMarker>
+            disaster={disaster}
+            onMarkerClick={onMarkerClick}
+          />
         ))}
 
         {/* NGOs */}

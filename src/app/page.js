@@ -290,10 +290,10 @@ export default function LandingPage() {
         <div className={styles.ctaContent}>
           <h2 className={[styles.serifHeading, styles.ctaTitle].join(' ')}>Ready to make a difference?</h2>
           <div className={styles.ctaButtons}>
-            <button onClick={handleNeedHelp} className={styles.btnWhite}>
+            <button onClick={handleNeedHelp} className={styles.btnPrimary}>
               I Need Help
             </button>
-            <Link href="/donate" className={styles.btnWhiteOutline}>
+            <Link href="/donate" className={styles.btnSecondary}>
               Donate Now
             </Link>
           </div>

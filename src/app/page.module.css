@@ -389,10 +389,10 @@
 
 /* CTA SECTION */
 .ctaSection {
-  background: #2D6A4F;
+  background: #FAFAF8;
   padding: 80px 24px;
   text-align: center;
-  color: white;
+  color: #374151;
 }
 
 .ctaContent {
@@ -404,7 +404,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0 0 32px 0;
-  color: white;
+  color: #1B1B1B;
 }
 
 .ctaButtons {
@@ -414,34 +414,6 @@
   flex-wrap: wrap;
 }
 
-.btnWhite {
-  background: white;
-  color: #2D6A4F;
-  padding: 12px 32px;
-  border-radius: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.btnWhite:hover {
-  background: #F3F4F6;
-}
-
-.btnWhiteOutline {
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-  padding: 12px 32px;
-  border-radius: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.btnWhiteOutline:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
@@ -462,7 +434,7 @@
     width: 100%;
   }
 
-  .btnPrimary, .btnSecondary, .btnWhite, .btnWhiteOutline {
+  .btnPrimary, .btnSecondary {
     width: 100%;
     text-align: center;
     box-sizing: border-box;

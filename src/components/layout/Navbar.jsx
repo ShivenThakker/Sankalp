@@ -13,6 +13,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Disasters', href: '/disasters' },
+    { name: 'Map', href: '/map' },
     { name: 'NGOs', href: '/ngos' },
     { name: 'Donate', href: '/donate' },
     { name: 'Volunteer', href: '/volunteer' },

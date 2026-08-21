@@ -2,22 +2,32 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Menu, X, User } from 'lucide-react';
+import { useAuth, ROLE_LABELS } from '../../hooks/useAuth';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { role, isLoggedIn, logout } = useAuth();
 
-  const navLinks = [
+  const allLinks = [
     { name: 'Disasters', href: '/disasters' },
     { name: 'Map', href: '/map' },
     { name: 'NGOs', href: '/ngos' },
     { name: 'Donate', href: '/donate' },
-    { name: 'Volunteer', href: '/volunteer' },
-    { name: 'Register NGO', href: '/register-ngo' },
+    { name: 'I Need Help', href: '/help', hideForRoles: ['ngo'] },
+    { name: 'Volunteer', href: '/volunteer', hideForRoles: ['ngo'] },
+    { name: 'Register NGO', href: '/register-ngo', hideForRoles: ['ngo'] },
   ];
+
+  const navLinks = allLinks.filter(link => {
+    if (!link.hideForRoles) return true;
+    if (!role) return true;
+    return !link.hideForRoles.includes(role);
+  });
 
   return (
     <nav className={styles.navbar}>
@@ -40,9 +50,33 @@ export default function Navbar() {
         </div>
 
         <div className={styles.actions}>
-          <Link href="/login" className="btn btn-primary btn-sm">
-            Login
-          </Link>
+          {!isLoggedIn ? (
+            <Link href="/login" className="btn btn-primary btn-sm">
+              Login
+            </Link>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ 
+                background: '#D8F3DC', 
+                color: '#2D6A4F', 
+                padding: '4px 12px', 
+                borderRadius: '100px', 
+                fontSize: '0.8rem', 
+                fontWeight: '600' 
+              }}>
+                {ROLE_LABELS[role] || 'User'}
+              </span>
+              <button 
+                onClick={() => {
+                  logout();
+                  router.push('/');
+                }}
+                className="btn btn-outline btn-sm"
+              >
+                Logout
+              </button>
+            </div>
+          )}
           <button className={styles.mobileMenuBtn} onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

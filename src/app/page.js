@@ -9,6 +9,8 @@ import {
   Check
 } from 'lucide-react';
 import { useGodMode } from '@/hooks/useGodMode';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 const CountUp = ({ end, duration = 2, prefix = '', suffix = '' }) => {
@@ -53,6 +55,13 @@ export default function LandingPage() {
   ];
 
   const { customDisasters } = useGodMode();
+  const { login } = useAuth();
+  const router = useRouter();
+
+  const handleNeedHelp = () => {
+    login('citizen');
+    router.push('/help');
+  };
   
   const allAlerts = [
     ...customDisasters.map(d => ({
@@ -95,9 +104,9 @@ export default function LandingPage() {
             India's first AI-powered disaster relief platform. Connecting affected citizens with verified NGOs, donors, and volunteers in real-time.
           </p>
           <div className={styles.heroButtons}>
-            <Link href="/help" className={styles.btnPrimary}>
+            <button onClick={handleNeedHelp} className={styles.btnPrimary}>
               I Need Help
-            </Link>
+            </button>
             <Link href="/dashboard/admin" className={styles.btnSecondary}>
               View Dashboard
             </Link>
@@ -281,9 +290,9 @@ export default function LandingPage() {
         <div className={styles.ctaContent}>
           <h2 className={[styles.serifHeading, styles.ctaTitle].join(' ')}>Ready to make a difference?</h2>
           <div className={styles.ctaButtons}>
-            <Link href="/help" className={styles.btnWhite}>
+            <button onClick={handleNeedHelp} className={styles.btnWhite}>
               I Need Help
-            </Link>
+            </button>
             <Link href="/donate" className={styles.btnWhiteOutline}>
               Donate Now
             </Link>

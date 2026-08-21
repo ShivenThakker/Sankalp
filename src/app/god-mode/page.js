@@ -5,39 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { addCustomDisaster, clearCustomDisasters, generateRequest, addSimulatedRequest } from '../../lib/god-mode';
 import { useGodMode } from '../../hooks/useGodMode';
-import { Zap, Lock, ShieldAlert } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import styles from './page.module.css';
 
 const MapPicker = dynamic(() => import('../../components/map/MapPicker'), { ssr: false });
-
-const ADMIN_EMAIL = 'admin@sankalp.in';
-const ADMIN_PASS = 'sankalp2026';
 
 export default function GodModePage() {
   const { customDisasters, simulatedRequests, refresh } = useGodMode();
   const [isSimulating, setIsSimulating] = useState(false);
   const simulationRef = useRef(null);
-  const [authenticated, setAuthenticated] = useState(false);
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPass, setLoginPass] = useState('');
-  const [loginError, setLoginError] = useState('');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && sessionStorage.getItem('godmode_auth') === 'true') {
-      setAuthenticated(true);
-    }
-  }, []);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (loginEmail === ADMIN_EMAIL && loginPass === ADMIN_PASS) {
-      setAuthenticated(true);
-      sessionStorage.setItem('godmode_auth', 'true');
-      setLoginError('');
-    } else {
-      setLoginError('Invalid credentials. Access denied.');
-    }
-  };
 
   const [formData, setFormData] = useState({
     name: 'Chennai Floods',
@@ -126,43 +102,6 @@ export default function GodModePage() {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-
-        {!authenticated ? (
-          <div className={styles.loginGate}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className={styles.loginCard}
-            >
-              <div className={styles.loginIcon}><Lock size={40} /></div>
-              <h1 className={styles.loginTitle}>Restricted Access</h1>
-              <p className={styles.loginSubtitle}>Admin credentials required to access God Mode</p>
-              <form onSubmit={handleLogin} className={styles.loginForm}>
-                <input
-                  type="email"
-                  placeholder="Admin Email"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
-                  className={styles.loginInput}
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={loginPass}
-                  onChange={(e) => setLoginPass(e.target.value)}
-                  className={styles.loginInput}
-                  required
-                />
-                {loginError && <div className={styles.loginError}><ShieldAlert size={16} /> {loginError}</div>}
-                <button type="submit" className={styles.loginBtn}>
-                  <Zap size={18} /> Authenticate
-                </button>
-              </form>
-            </motion.div>
-          </div>
-        ) : (
-        <>
         
         <header className={styles.header}>
           <h1 className={styles.title}>God Mode <span role="img" aria-label="lightning">⚡</span></h1>
@@ -343,9 +282,6 @@ export default function GodModePage() {
               ))}
             </div>
           </section>
-        )}
-
-        </>
         )}
 
       </div>

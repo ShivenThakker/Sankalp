@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  padding: 100px 20px 40px;
+  padding: 100px 32px 40px;
   max-width: 600px;
   margin: 0 auto;
   color: var(--color-white, #fff);
@@ -72,6 +72,7 @@
 
 .peopleRow, .urgencyRow {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
@@ -197,4 +198,43 @@
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.3);
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 90px 24px 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 80px 16px 40px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .needCard {
+    height: 100px;
+    gap: 8px;
+  }
+
+  .emoji {
+    font-size: 32px;
+  }
+
+  .label {
+    font-size: 14px;
+  }
+
+  .peopleBtn, .urgencyBtn {
+    flex: 1 1 calc(50% - 12px);
+    height: 48px;
+    font-size: 14px;
+  }
 }

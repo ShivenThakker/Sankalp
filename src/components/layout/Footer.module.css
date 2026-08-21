@@ -45,3 +45,27 @@
   color: var(--color-text-muted);
   font-size: 0.8rem;
 }
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1.5rem 0;
+  }
+  
+  .links {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .link {
+    font-size: 0.85rem;
+  }
+  
+  .badge {
+    font-size: 0.75rem;
+  }
+  
+  .copyright {
+    font-size: 0.75rem;
+  }
+}

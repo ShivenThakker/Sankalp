@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Phone, Mail, MapPin, CheckCircle2, ArrowRight, X } from 'lucide-react';
+import { User, Phone, Mail, MapPin, CheckCircle2, ArrowRight, X, AlertTriangle } from 'lucide-react';
+import { useGodMode } from '@/hooks/useGodMode';
 import styles from './page.module.css';
 
 const SKILLS = [
@@ -34,6 +35,9 @@ export default function VolunteerPage() {
   const [hasVehicle, setHasVehicle] = useState(false);
   const [vehicleType, setVehicleType] = useState('car');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedDisasterId, setSelectedDisasterId] = useState('');
+
+  const { customDisasters } = useGodMode();
 
   const handleSkillToggle = (id) => {
     setSelectedSkills(prev => 
@@ -122,6 +126,21 @@ export default function VolunteerPage() {
                 {['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'].map(s => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
+            {customDisasters.length > 0 && (
+              <div className={styles.inputGroup} style={{ gridColumn: '1 / -1' }}>
+                <AlertTriangle size={18} color="orange" />
+                <select 
+                  value={selectedDisasterId}
+                  onChange={(e) => setSelectedDisasterId(e.target.value)}
+                  style={{ borderColor: 'orange' }}
+                >
+                  <option value="">Respond to a specific active disaster? (Optional)</option>
+                  {customDisasters.map(d => (
+                    <option key={d.id} value={d.id}>⚡ {d.name} ({d.districts?.join(', ')})</option>
+                  ))}
+                </select>
+              </div>
+            )}
             <div className={styles.inputGroup}>
               <MapPin size={18} />
               <input 

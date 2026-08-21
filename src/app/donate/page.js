@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IndianRupee, Heart, ShieldCheck, MapPin, Truck, Home, PlusCircle, User, Mail, CheckCircle2, ChevronRight, Activity, ArrowRight, X } from 'lucide-react';
+import { useGodMode } from '@/hooks/useGodMode';
 import styles from './page.module.css';
 
 const DISASTERS = [
@@ -26,6 +27,18 @@ const ALLOCATIONS = [
 ];
 
 export default function DonatePage() {
+  const { customDisasters } = useGodMode();
+  
+  const allCauses = [
+    ...DISASTERS,
+    ...customDisasters.map(d => ({
+      id: d.id,
+      title: d.name,
+      urgent: d.severity === 'critical' || d.severity === 'high',
+      isCustom: true
+    }))
+  ];
+
   const [selectedDisaster, setSelectedDisaster] = useState('assam');
   const [amount, setAmount] = useState(1000);
   const [customAmount, setCustomAmount] = useState('');
@@ -110,15 +123,16 @@ export default function DonatePage() {
           >
             <h2 className={styles.sectionTitle}>Select Cause</h2>
             <div className={styles.disasterGrid}>
-              {DISASTERS.map((disaster) => (
+              {allCauses.map((disaster) => (
                 <div 
                   key={disaster.id}
                   className={`${styles.disasterCard} ${selectedDisaster === disaster.id ? styles.selectedCard : ''}`}
                   onClick={() => setSelectedDisaster(disaster.id)}
+                  style={disaster.isCustom ? { borderColor: 'var(--accent-orange)' } : {}}
                 >
                   <div className={styles.disasterInfo}>
                     <MapPin size={18} />
-                    <span>{disaster.title}</span>
+                    <span>{disaster.title} {disaster.isCustom && '⚡'}</span>
                   </div>
                   {disaster.urgent && <span className={styles.urgentBadge}>Urgent</span>}
                 </div>

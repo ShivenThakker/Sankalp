@@ -29,11 +29,12 @@ const DisasterMarker = ({ disaster, onMarkerClick }) => {
     <CircleMarker
       center={[disaster.centerLat, disaster.centerLng]}
       pathOptions={{ 
-        color: getSeverityColor(disaster.severity),
-        fillColor: getSeverityColor(disaster.severity),
+        color: disaster.isCustom ? '#f97316' : getSeverityColor(disaster.severity),
+        fillColor: disaster.isCustom ? '#f97316' : getSeverityColor(disaster.severity),
         fillOpacity: 0.2
       }}
       radius={Math.max((disaster.radiusKm * 200) / 1000, 10)}
+      className={disaster.isCustom ? styles.pulsingMarker : ''}
       eventHandlers={{
         click: () => {
           map.flyTo([disaster.centerLat, disaster.centerLng], 9, { duration: 1.5 });
@@ -43,8 +44,8 @@ const DisasterMarker = ({ disaster, onMarkerClick }) => {
     >
       <Popup>
         <div className={styles.popupContent}>
-          <h3>{disaster.title}</h3>
-          <p><strong>Severity:</strong> <span style={{ color: getSeverityColor(disaster.severity) }}>{disaster.severity}</span></p>
+          <h3>{disaster.title} {disaster.isCustom && '⚡'}</h3>
+          <p><strong>Severity:</strong> <span style={{ color: disaster.isCustom ? '#f97316' : getSeverityColor(disaster.severity) }}>{disaster.severity}</span></p>
           <p><strong>Type:</strong> {disaster.type}</p>
           <p><strong>Affected:</strong> {disaster.affectedPopulation?.toLocaleString()}</p>
           <p><strong>Radius:</strong> {disaster.radiusKm} km</p>
@@ -112,9 +113,9 @@ const DisasterMap = ({
           <CircleMarker
             key={req.id}
             center={[req.lat, req.lng]}
-            pathOptions={{ color: '#ef4444', fillColor: '#ef4444', fillOpacity: 1 }}
+            pathOptions={{ color: req.isCustom ? '#f97316' : '#ef4444', fillColor: req.isCustom ? '#f97316' : '#ef4444', fillOpacity: 1 }}
             radius={6}
-            className={req.urgency === 'critical' ? styles.pulsingMarker : ''}
+            className={req.urgency === 'critical' || req.isCustom ? styles.pulsingMarker : ''}
             eventHandlers={{
               click: () => onMarkerClick(req, 'request'),
             }}
@@ -154,6 +155,10 @@ const DisasterMap = ({
         <div className={styles.legendItem}>
           <span className={styles.legendColor} style={{ backgroundColor: '#ef4444', width: 6, height: 6, borderRadius: '50%' }}></span>
           <span>Help Request</span>
+        </div>
+        <div className={styles.legendItem}>
+          <span className={styles.legendColor} style={{ backgroundColor: '#f97316', opacity: 0.5 }}></span>
+          <span>⚡ Live Custom Event</span>
         </div>
       </div>
     </div>

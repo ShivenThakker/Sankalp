@@ -28,6 +28,7 @@ import {
   LayoutDashboard,
   Map
 } from 'lucide-react';
+import { useGodMode } from '@/hooks/useGodMode';
 import styles from './page.module.css';
 
 export default function AdminDashboard() {
@@ -82,6 +83,26 @@ export default function AdminDashboard() {
     { id: '2', name: 'Shelter Now India', score: 95, active: 8, icons: [Home, Truck] },
     { id: '3', name: 'MedCare Initiative', score: 92, active: 5, icons: [Stethoscope, LifeBuoy] },
   ];
+
+  const { customDisasters, simulatedRequests } = useGodMode();
+  
+  const allRequests = [
+    ...simulatedRequests.map(r => ({
+      id: r.id,
+      time: 'Just now',
+      people: r.people,
+      needs: r.needs,
+      location: r.location,
+      status: r.status,
+      urgency: r.urgency,
+      isCustom: true
+    })),
+    ...mockRequests
+  ];
+  
+  const activeRequestsCount = 47 + simulatedRequests.length;
+  const hasCustomDisaster = customDisasters.length > 0;
+  const latestCustomDisaster = hasCustomDisaster ? customDisasters[0] : null;
 
   return (
     <div className={styles.dashboardContainer}>
@@ -139,6 +160,19 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, y: 0 }}
             className={styles.overviewTab}
           >
+            {hasCustomDisaster && (
+              <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={styles.pulsingBanner}
+                style={{ backgroundColor: 'var(--accent-orange)', color: 'white', padding: '12px 24px', borderRadius: '8px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', animation: 'pulse 2s infinite' }}
+              >
+                <AlertTriangle size={24} />
+                <strong style={{ letterSpacing: '1px' }}>⚡ NEW DISASTER DEPLOYED: {latestCustomDisaster.name.toUpperCase()}</strong>
+                <span>| {latestCustomDisaster.districts?.join(', ')}</span>
+              </motion.div>
+            )}
+
             {/* Top Bar */}
             <div className={styles.topBar}>
               <div className={styles.topBarLeft}>
@@ -157,9 +191,9 @@ export default function AdminDashboard() {
               <div className={styles.statCard}>
                 <div className={styles.statHeader}>
                   <AlertTriangle size={24} className={styles.statIcon} style={{ color: 'var(--danger)' }} />
-                  <span className={styles.trendUp}><TrendingUp size={14} /> +12 today</span>
+                  <span className={styles.trendUp}><TrendingUp size={14} /> +{12 + simulatedRequests.length} today</span>
                 </div>
-                <div className={styles.statValue}>47</div>
+                <div className={styles.statValue}>{activeRequestsCount}</div>
                 <div className={styles.statLabel}>Active Requests</div>
               </div>
               <div className={styles.statCard}>
@@ -253,27 +287,36 @@ export default function AdminDashboard() {
                 <div className={styles.card}>
                   <h3 className={styles.cardTitle}><Clock size={20} /> Incoming Help Requests</h3>
                   <div className={styles.requestFeed}>
-                    {mockRequests.map(request => (
-                      <div key={request.id} className={styles.requestItem}>
-                        <div className={styles.requestStatusCol}>
-                          {renderUrgencyDot(request.urgency, request.status)}
-                        </div>
-                        <div className={styles.requestContent}>
-                          <div className={styles.requestHeader}>
-                            <span className={styles.requestTime}>{request.time}</span>
-                            <span className={`${styles.statusBadge} ${styles[request.status]}`}>
-                              {request.status.replace('_', ' ')}
-                            </span>
+                    <AnimatePresence>
+                      {allRequests.map(request => (
+                        <motion.div 
+                          key={request.id} 
+                          initial={request.isCustom ? { opacity: 0, x: -20, backgroundColor: '#fff3e0' } : {}}
+                          animate={request.isCustom ? { opacity: 1, x: 0, backgroundColor: '#ffffff' } : {}}
+                          transition={{ duration: 0.5 }}
+                          className={styles.requestItem}
+                          style={request.isCustom ? { borderLeft: '4px solid var(--accent-orange)' } : {}}
+                        >
+                          <div className={styles.requestStatusCol}>
+                            {renderUrgencyDot(request.urgency, request.status)}
                           </div>
-                          <div className={styles.requestDesc}>
-                            {request.people} people need {request.needs.join(' + ')}
+                          <div className={styles.requestContent}>
+                            <div className={styles.requestHeader}>
+                              <span className={styles.requestTime}>{request.time} {request.isCustom && <span style={{color: 'orange', fontSize: '10px'}}>⚡ SIMULATED</span>}</span>
+                              <span className={`${styles.statusBadge} ${styles[request.status]}`}>
+                                {request.status.replace('_', ' ')}
+                              </span>
+                            </div>
+                            <div className={styles.requestDesc}>
+                              {request.people} people need {request.needs.join(' + ')}
+                            </div>
+                            <div className={styles.requestLocation}>
+                              <MapPin size={12} /> {request.location}
+                            </div>
                           </div>
-                          <div className={styles.requestLocation}>
-                            <MapPin size={12} /> {request.location}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
                   </div>
                 </div>
 

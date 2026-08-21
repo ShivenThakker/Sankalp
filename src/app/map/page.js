@@ -1,6 +1,7 @@
 'use client';
 
 import MapLoader from '@/components/map/MapLoader';
+import { useGodMode } from '@/hooks/useGodMode';
 import styles from './page.module.css';
 
 const MOCK_MAP_DATA = {
@@ -36,7 +37,37 @@ const MOCK_MAP_DATA = {
 };
 
 export default function MapPage() {
-  const totalAffected = MOCK_MAP_DATA.disasters.reduce((acc, d) => acc + (d.affectedPopulation || 0), 0);
+  const { customDisasters, simulatedRequests } = useGodMode();
+  
+  const allMapDisasters = [
+    ...MOCK_MAP_DATA.disasters,
+    ...customDisasters.map(d => ({
+      id: d.id,
+      title: d.name,
+      type: d.type,
+      severity: d.severity,
+      centerLat: d.centerLat,
+      centerLng: d.centerLng,
+      radiusKm: d.radiusKm,
+      affectedPopulation: d.affectedPopulation,
+      isCustom: true
+    }))
+  ];
+
+  const allMapRequests = [
+    ...MOCK_MAP_DATA.helpRequests,
+    ...simulatedRequests.map(r => ({
+      id: r.id,
+      lat: r.lat,
+      lng: r.lng,
+      people: r.people,
+      needs: r.needs,
+      urgency: r.urgency,
+      isCustom: true
+    }))
+  ];
+
+  const totalAffected = allMapDisasters.reduce((acc, d) => acc + (d.affectedPopulation || 0), 0);
 
   return (
     <div className={styles.pageContainer}>
@@ -49,9 +80,9 @@ export default function MapPage() {
 
       <div className={styles.mapWrapper}>
         <MapLoader 
-          disasters={MOCK_MAP_DATA.disasters}
+          disasters={allMapDisasters}
           ngos={MOCK_MAP_DATA.ngos}
-          helpRequests={MOCK_MAP_DATA.helpRequests}
+          helpRequests={allMapRequests}
           center={[24.0, 85.0]}
           zoom={5}
           height="60vh"
@@ -62,7 +93,7 @@ export default function MapPage() {
         <div className={styles.summaryCard}>
           <div className={styles.cardIcon}>🚨</div>
           <div className={styles.cardContent}>
-            <h3>{MOCK_MAP_DATA.disasters.length}</h3>
+            <h3>{allMapDisasters.length}</h3>
             <p>Active Disasters</p>
           </div>
         </div>
@@ -78,7 +109,7 @@ export default function MapPage() {
         <div className={styles.summaryCard}>
           <div className={styles.cardIcon}>🆘</div>
           <div className={styles.cardContent}>
-            <h3>{MOCK_MAP_DATA.helpRequests.length}</h3>
+            <h3>{allMapRequests.length}</h3>
             <p>Help Requests Pending</p>
           </div>
         </div>

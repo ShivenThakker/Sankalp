@@ -8,6 +8,7 @@ import {
   ArrowRight,
   Check
 } from 'lucide-react';
+import { useGodMode } from '@/hooks/useGodMode';
 import styles from './page.module.css';
 
 const CountUp = ({ end, duration = 2, prefix = '', suffix = '' }) => {
@@ -49,6 +50,23 @@ export default function LandingPage() {
     { id: 1, title: 'Assam Floods', emoji: '🌊', severity: 'HIGH', location: 'Kamrup', districts: 'Kamrup, Nagaon', pop: '50,000+', type: 'high' },
     { id: 2, title: 'Cyclone Warning', emoji: '🌀', severity: 'MODERATE', location: 'Odisha coast', districts: 'Puri, Ganjam', pop: '100,000+', type: 'mod' },
     { id: 3, title: 'Forest Fire', emoji: '🔥', severity: 'LOW', location: 'Uttarakhand', districts: 'Almora', pop: '1,000+', type: 'low' }
+  ];
+
+  const { customDisasters } = useGodMode();
+  
+  const allAlerts = [
+    ...customDisasters.map(d => ({
+      id: d.id,
+      title: d.name,
+      emoji: '⚡',
+      severity: d.severity.toUpperCase(),
+      location: d.districts?.[0] || 'Unknown',
+      districts: d.districts?.join(', ') || 'Unknown',
+      pop: d.affectedPopulation?.toLocaleString() + '+',
+      type: d.severity === 'high' || d.severity === 'critical' ? 'high' : d.severity === 'moderate' ? 'mod' : 'low',
+      isCustom: true
+    })),
+    ...alerts
   ];
 
   const steps = [
@@ -114,7 +132,7 @@ export default function LandingPage() {
           <h2 className={[styles.serifHeading, styles.sectionTitle].join(' ')}>Active disaster alerts</h2>
         </div>
         <div className={styles.alertsGrid}>
-          {alerts.map((alert, index) => (
+          {allAlerts.map((alert, index) => (
             <motion.div
               key={alert.id}
               className={[
@@ -131,7 +149,7 @@ export default function LandingPage() {
               <div className={styles.alertHeader}>
                 <div className={styles.alertTitleWrapper}>
                   <span className={styles.alertEmoji}>{alert.emoji}</span>
-                  <h3 className={styles.alertTitle}>{alert.title}</h3>
+                  <h3 className={styles.alertTitle}>{alert.title} {alert.isCustom && <span style={{fontSize: '0.6em', color: 'orange', paddingLeft: '4px'}}>⚡ LIVE</span>}</h3>
                 </div>
                 <span className={[
                   styles.severityBadge, 

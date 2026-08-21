@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Waves, Wind, Flame, Mountain, AlertTriangle, Users, Building2, MapPin } from 'lucide-react';
 import Badge from '@/components/ui/Badge';
+import { useGodMode } from '@/hooks/useGodMode';
 import styles from './page.module.css';
 
 export const MOCK_DISASTERS = [
@@ -103,10 +104,36 @@ const ICONS = {
 };
 
 export default function DisastersPage() {
+  const { customDisasters } = useGodMode();
   const [filterType, setFilterType] = useState('All');
   const [filterSeverity, setFilterSeverity] = useState('All');
 
-  const filteredDisasters = MOCK_DISASTERS.filter(d => {
+  const allDisasters = [
+    ...MOCK_DISASTERS,
+    ...customDisasters.map(d => ({
+      id: d.id,
+      title: d.name,
+      type: d.type,
+      severity: d.severity,
+      description: `Custom disaster: ${d.name}`,
+      affectedDistricts: d.districts || [],
+      affectedStates: [],
+      centerLat: d.centerLat,
+      centerLng: d.centerLng,
+      radiusKm: d.radiusKm,
+      affectedPopulation: d.affectedPopulation,
+      source: 'GOD MODE',
+      status: d.status,
+      startedAt: d.createdAt,
+      needs: [{ type: 'rescue', needed: 100, fulfilled: 10, priority: 'critical' }],
+      ngosActive: 0,
+      volunteerCount: 0,
+      donationsRaised: 0,
+      isCustom: true
+    }))
+  ];
+
+  const filteredDisasters = allDisasters.filter(d => {
     const typeMatch = filterType === 'All' || d.type.toLowerCase() === filterType.toLowerCase();
     const severityMatch = filterSeverity === 'All' || d.severity.toLowerCase() === filterSeverity.toLowerCase();
     return typeMatch && severityMatch;
@@ -169,12 +196,14 @@ export default function DisastersPage() {
             whileInView={{ opacity: 1, y: 0 }} 
             viewport={{ once: true, amount: 0.2 }} 
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className={`${styles.card} ${styles[`border-${disaster.severity}`]}`}
+            className={`${styles.card} ${styles['border-' + disaster.severity]} ${disaster.isCustom ? styles.customGlow : ''}`}
+            style={disaster.isCustom ? { borderColor: 'var(--accent-orange)' } : {}}
           >
             <div className={styles.cardHeader}>
               <div className={styles.cardTitleArea}>
                 <span className={styles.emoji}>{ICONS[disaster.type] || <AlertTriangle size={20}/>}</span>
                 <h2 className={styles.cardTitle}>{disaster.title}</h2>
+                {disaster.isCustom && <Badge variant="warning">⚡ LIVE</Badge>}
               </div>
               <div className={styles.badges}>
                 <Badge variant={getSeverityVariant(disaster.severity)}>{disaster.severity.toUpperCase()}</Badge>

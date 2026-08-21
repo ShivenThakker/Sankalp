@@ -21,6 +21,20 @@
   width: 100%;
 }
 
+.bgDarkGreen {
+  background-color: #1B4332;
+  width: 100%;
+}
+
+.bgDarkGreen .serifHeading {
+  color: #FFFFFF;
+}
+
+.bgDarkGreen .sectionBadge {
+  background: rgba(255, 255, 255, 0.15);
+  color: #D8F3DC;
+}
+
 .sectionBadge {
   display: inline-flex;
   padding: 6px 16px;

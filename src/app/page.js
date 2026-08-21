@@ -179,7 +179,7 @@ export default function LandingPage() {
       </motion.section>
 
       {/* HOW IT WORKS SECTION */}
-      <div className={styles.bgSubtle}>
+      <div className={styles.bgDarkGreen}>
         <motion.section
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -244,7 +244,7 @@ export default function LandingPage() {
       </motion.section>
 
       {/* TRUST PIPELINE SECTION */}
-      <div className={styles.bgSubtle}>
+      <div className={styles.bgDarkGreen}>
         <motion.section
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

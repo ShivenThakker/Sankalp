@@ -263,7 +263,7 @@ export default function LandingPage() {
             ))}
           </div>
           <div className={styles.trustCtaContainer}>
-            <Link href="/ngos" className={styles.linkWithIcon}>
+            <Link href="/ngos" className={styles.primaryBtn}>
               Browse Verified NGOs <ArrowRight size={18} />
             </Link>
           </div>

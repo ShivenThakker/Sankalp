@@ -107,7 +107,7 @@ export default function LandingPage() {
             <button onClick={handleNeedHelp} className={styles.btnPrimary}>
               I Need Help
             </button>
-            <Link href="/dashboard/admin" className={styles.btnSecondary}>
+            <Link href="/login" className={styles.btnSecondary}>
               View Dashboard
             </Link>
           </div>

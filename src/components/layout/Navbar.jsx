@@ -21,9 +21,15 @@ export default function Navbar() {
     { name: 'I Need Help', href: '/help', hideForRoles: ['ngo'] },
     { name: 'Volunteer', href: '/volunteer', hideForRoles: ['ngo'] },
     { name: 'Register NGO', href: '/register-ngo', hideForRoles: ['ngo'] },
+    { name: 'Dashboard', href: '/dashboard/admin', showForRoles: ['ngo', 'dc', 'volunteer'] },
+    { name: '⚡ God Mode', href: '/god-mode', showForRoles: ['dc'] },
   ];
 
   const navLinks = allLinks.filter(link => {
+    if (link.showForRoles) {
+      if (!role) return false;
+      return link.showForRoles.includes(role);
+    }
     if (!link.hideForRoles) return true;
     if (!role) return true;
     return !link.hideForRoles.includes(role);

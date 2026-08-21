@@ -1,17 +1,9 @@
 'use client'
 
-import { Suspense } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import styles from './page.module.css';
-
-const MOCK_NGOS = [
-  { id: '1', name: 'Assam Relief Foundation', trustScore: 91, verificationStatus: 'verified', distance: 1.1, eta: 15, capabilities: ['food', 'water', 'shelter'], resources: { food_kits: 500, water_litres: 2000 }, phone: '+91-98765-43210', address: 'MG Road, Guwahati' },
-  { id: '2', name: 'Health First India', trustScore: 87, verificationStatus: 'verified', distance: 2.4, eta: 30, capabilities: ['medical'], resources: { doctors: 3, medical_kits: 120 }, phone: '+91-98765-11111', address: 'GS Road, Guwahati' },
-  { id: '3', name: 'Shelter Now India', trustScore: 78, verificationStatus: 'verified', distance: 3.7, eta: 45, capabilities: ['shelter', 'clothing'], resources: { beds: 80, tents: 25 }, phone: '+91-98765-22222', address: 'Zoo Road, Guwahati' },
-  { id: '4', name: 'Rapid Response Team', trustScore: 85, verificationStatus: 'verified', distance: 4.2, eta: 50, capabilities: ['rescue', 'transport'], resources: { vehicles: 5, boats: 3 }, phone: '+91-98765-33333', address: 'Chandmari, Guwahati' },
-  { id: '5', name: 'Paws & Claws Rescue', trustScore: 72, verificationStatus: 'verified', distance: 5.8, eta: 65, capabilities: ['animal_rescue'], resources: { volunteers: 20 }, phone: '+91-98765-44444', address: 'Beltola, Guwahati' },
-];
 
 const EMOJI_MAP = {
   food: '🍚',
@@ -29,48 +21,86 @@ function ResultsList() {
   const needsParam = searchParams.get('needs');
   const lat = searchParams.get('lat');
   const lng = searchParams.get('lng');
+  const urgency = searchParams.get('urgency') || 'high';
+  const people = searchParams.get('people') || '1';
   const address = searchParams.get('address');
   
+  const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [requestId, setRequestId] = useState('');
+
   const requestedNeeds = needsParam ? needsParam.split(',') : [];
 
-  let filteredNgos = MOCK_NGOS.filter(ngo => 
-    ngo.capabilities.some(cap => requestedNeeds.includes(cap))
-  );
-
-  if (requestedNeeds.length === 0 || requestedNeeds.includes('other')) {
-      filteredNgos = MOCK_NGOS;
-  }
-
-  const sortedNgos = [...filteredNgos].sort((a, b) => a.distance - b.distance);
+  useEffect(() => {
+    async function fetchMatches() {
+      try {
+        const res = await fetch('/api/match', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            needs: requestedNeeds,
+            lat: parseFloat(lat) || 26.18,
+            lng: parseFloat(lng) || 91.75,
+            urgency,
+            people: parseInt(people) || 1,
+          }),
+        });
+        const data = await res.json();
+        setMatches(data.matches || []);
+        setRequestId(data.requestId || '');
+      } catch (err) {
+        console.error('Match API failed, using empty results:', err);
+        setMatches([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMatches();
+  }, []);
 
   const locDisplay = (lat && lng) ? `${parseFloat(lat).toFixed(4)}, ${parseFloat(lng).toFixed(4)}` : address || 'Unknown location';
+
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loading}>
+          <div className={styles.spinner}></div>
+          <p>🔍 Finding verified help near you...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>✅ Help is available near you</h1>
         <p className={styles.location}>📍 Your location: {locDisplay}</p>
+        {requestId && <p className={styles.requestIdText}>Request ID: {requestId}</p>}
       </header>
 
       <div className={styles.warning}>
-        ⚠️ Resource data was last updated 2 hours ago. Call ahead to confirm availability.
+        ⚠️ Resource data freshness varies. Call ahead to confirm availability.
       </div>
 
       <div className={styles.resultsList}>
-        {sortedNgos.length > 0 ? sortedNgos.map((ngo, index) => (
+        {matches.length > 0 ? matches.map((ngo, index) => (
           <motion.div 
-            key={ngo.id}
+            key={ngo.ngoId}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`${styles.card} ${styles[ngo.capabilities[0]] || styles.defaultCard}`}
+            className={styles.card}
           >
             <div className={styles.cardHeader}>
               <div className={styles.capLabel}>
-                <span className={styles.emoji}>{EMOJI_MAP[ngo.capabilities[0]] || '📦'}</span>
-                <span className={styles.capText}>{ngo.capabilities[0].replace('_', ' ').toUpperCase()}</span>
+                <span className={styles.emoji}>{EMOJI_MAP[ngo.matchedCapabilities?.[0]] || '📦'}</span>
+                <span className={styles.capText}>{(ngo.matchedCapabilities || ngo.capabilities)?.join(', ').replace(/_/g, ' ').toUpperCase()}</span>
               </div>
-              <div className={styles.trustBadge}>🟢 {ngo.trustScore}</div>
+              <div className={styles.trustBadge}>
+                🟢 {ngo.verificationScore} 
+                <span className={styles.matchScore}>Match: {ngo.matchScore}%</span>
+              </div>
             </div>
             
             <h3 className={styles.ngoName}>{ngo.name}</h3>
@@ -78,10 +108,8 @@ function ResultsList() {
             <div className={styles.details}>
               <p>📍 {ngo.distance} km away</p>
               <p>🕐 ETA: ~{ngo.eta} minutes</p>
-              <p className={styles.resources}>
-                Resources: {Object.entries(ngo.resources).map(([k, v]) => `${v} ${k.replace('_', ' ')}`).join(', ')}
-              </p>
               <p className={styles.phone}>📞 {ngo.phone}</p>
+              <p className={styles.addressText}>📮 {ngo.address}</p>
             </div>
 
             <div className={styles.actions}>
@@ -101,7 +129,7 @@ function ResultsList() {
       </div>
 
       <div className={styles.bottomFallback}>
-        <p>⚠️ Can't find what you need?</p>
+        <p>⚠️ Can&apos;t find what you need?</p>
         <a href="tel:112" className={styles.emergencyBtn}>Call Emergency: 112</a>
       </div>
     </div>

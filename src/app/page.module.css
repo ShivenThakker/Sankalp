@@ -415,6 +415,24 @@
 }
 
 
+.btnWhite {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  color: #1B4332;
+  padding: 12px 32px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btnWhite:hover {
+  background: #F3F4F6;
+  gap: 12px;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .heroTitle {

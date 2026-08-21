@@ -47,7 +47,7 @@ export default function LoginPage() {
       >
         <div className={styles.header}>
           <h2>{activeTab === 'login' ? 'Welcome Back' : 'Create Account'}</h2>
-          <p>Sign in to access ReliefNet features</p>
+          <p>Sign in to access Sankalp features</p>
         </div>
 
         <div className={styles.tabs}>

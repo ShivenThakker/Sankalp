@@ -125,7 +125,7 @@ export default function LandingPage() {
       {/* HOW IT WORKS */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>How ReliefNet Works</h2>
+          <h2 className={styles.sectionTitle}>How Sankalp Works</h2>
           <p className={styles.sectionSubtitle}>Seamlessly coordinating relief efforts from alert to delivery.</p>
         </div>
         <motion.div 
@@ -182,7 +182,7 @@ export default function LandingPage() {
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Built for Decision Makers</h2>
-          <p className={styles.sectionSubtitle}>ReliefNet gives District Collectors a real-time command center for disaster response coordination.</p>
+          <p className={styles.sectionSubtitle}>Sankalp gives District Collectors a real-time command center for disaster response coordination.</p>
         </div>
         <div className={styles.featuresGrid}>
           {[

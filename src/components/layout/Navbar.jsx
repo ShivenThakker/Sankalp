@@ -23,7 +23,7 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.icon}>🆘</span> ReliefNet
+          <span className={styles.icon}>🆘</span> Sankalp
         </Link>
         
         <div className={styles.desktopLinks}>

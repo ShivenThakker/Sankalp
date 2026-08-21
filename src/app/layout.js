@@ -6,7 +6,7 @@ import Footer from '../components/layout/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'ReliefNet — Disaster Relief Coordination',
+  title: 'Sankalp — Disaster Relief Coordination',
   description: 'India\'s first AI-powered disaster relief coordination platform. Connecting affected citizens with verified NGOs, donors, and volunteers in real-time.',
 };
 

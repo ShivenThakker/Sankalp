@@ -16,8 +16,8 @@ const MOCK_DONATIONS = [
     allocations: [
       { category: 'Food Kits', amount: 2000, ngo: 'Assam Relief Foundation', status: 'delivered', icon: '🍚' },
       { category: 'Medical Supplies', amount: 1500, ngo: 'Health First India', status: 'in_transit', icon: '💊' },
-      { category: 'Emergency Reserve', amount: 1000, ngo: 'ReliefNet Pool', status: 'reserved', icon: '🏦' },
-      { category: 'Platform Operations', amount: 500, ngo: 'ReliefNet', status: 'allocated', icon: '⚙️' },
+      { category: 'Emergency Reserve', amount: 1000, ngo: 'Sankalp Pool', status: 'reserved', icon: '🏦' },
+      { category: 'Platform Operations', amount: 500, ngo: 'Sankalp', status: 'allocated', icon: '⚙️' },
     ]
   },
   {
@@ -29,7 +29,7 @@ const MOCK_DONATIONS = [
     allocations: [
       { category: 'Shelter Materials', amount: 600, ngo: 'Pending Assignment', status: 'pending', icon: '🏠' },
       { category: 'Transport', amount: 350, ngo: 'Pending Assignment', status: 'pending', icon: '🚗' },
-      { category: 'Platform Operations', amount: 50, ngo: 'ReliefNet', status: 'allocated', icon: '⚙️' },
+      { category: 'Platform Operations', amount: 50, ngo: 'Sankalp', status: 'allocated', icon: '⚙️' },
     ]
   }
 ];

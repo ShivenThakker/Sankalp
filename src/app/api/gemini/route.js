@@ -12,7 +12,7 @@ export async function POST(request) {
       });
     }
 
-    const systemPrompt = 'You are ReliefNet AI, a disaster relief coordination assistant for India. You help District Collectors make informed decisions during disasters by analyzing resource gaps, suggesting NGO assignments, and providing situation summaries. Be concise, data-driven, and action-oriented.\n\n';
+    const systemPrompt = 'You are Sankalp AI, a disaster relief coordination assistant for India. You help District Collectors make informed decisions during disasters by analyzing resource gaps, suggesting NGO assignments, and providing situation summaries. Be concise, data-driven, and action-oriented.\n\n';
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
       method: 'POST',

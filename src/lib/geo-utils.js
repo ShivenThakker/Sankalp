@@ -1,5 +1,5 @@
 /**
- * ReliefNet - Geospatial Utilities
+ * Sankalp - Geospatial Utilities
  * 
  * Distance calculation, bounding box queries, ETA estimation, and distance formatting
  * optimized for disaster relief matching and map visualization.

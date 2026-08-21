@@ -110,7 +110,7 @@ export default function NGODirectory() {
     <div className={styles.pageContainer}>
       <header className={styles.header}>
         <h1 className={styles.title}>Verified NGO Directory</h1>
-        <p className={styles.subtitle}>Browse organizations verified by ReliefNet's document verification process</p>
+        <p className={styles.subtitle}>Browse organizations verified by Sankalp's document verification process</p>
       </header>
 
       <div className={styles.filtersContainer}>

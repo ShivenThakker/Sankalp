@@ -101,7 +101,7 @@ export default function AdminDashboard() {
       {/* Sidebar */}
       <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}>
         <div className={styles.sidebarHeader}>
-          <h2>ReliefNet</h2>
+          <h2>Sankalp</h2>
           <span className={styles.adminBadge}>Command Center</span>
         </div>
         

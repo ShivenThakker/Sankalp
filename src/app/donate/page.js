@@ -32,7 +32,7 @@ export default function DonatePage() {
     medical: false,
     shelter: false,
     logistics: false,
-    platform: true // Let ReliefNet Decide
+    platform: true // Let Sankalp Decide
   });
 
   const [donorInfo, setDonorInfo] = useState({
@@ -179,7 +179,7 @@ export default function DonatePage() {
                 />
                 <span className={styles.checkboxText}>
                   <ShieldCheck size={18} />
-                  Let ReliefNet Decide
+                  Let Sankalp Decide
                 </span>
               </label>
               

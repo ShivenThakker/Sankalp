@@ -1,5 +1,5 @@
 /**
- * ReliefNet - Supabase Server Client & Admin Client
+ * Sankalp - Supabase Server Client & Admin Client
  * 
  * Provides server-side Supabase clients for Next.js App Router:
  * - createServerClient: User-scoped client respecting RLS and session cookies (Route Handlers, Server Components)

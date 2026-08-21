@@ -1,5 +1,5 @@
 /**
- * ReliefNet - Core Platform Constants & Enums
+ * Sankalp - Core Platform Constants & Enums
  * 
  * Contains all static enum definitions, capability types, disaster types,
  * urgency tiers, volunteer skills, and status badges used across the platform.
@@ -115,7 +115,7 @@ export const CAPABILITY_TYPES_MAP = Object.fromEntries(
 );
 
 /**
- * Disaster Types recognized by ReliefNet and SACHET alerts
+ * Disaster Types recognized by Sankalp and SACHET alerts
  */
 export const DISASTER_TYPES = {
   flood: {

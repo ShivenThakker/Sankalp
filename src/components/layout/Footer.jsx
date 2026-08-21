@@ -14,7 +14,7 @@ export default function Footer() {
           Built for SIH 2026
         </div>
         <div className={styles.copyright}>
-          © {new Date().getFullYear()} ReliefNet. All rights reserved.
+          © {new Date().getFullYear()} Sankalp. All rights reserved.
         </div>
       </div>
     </footer>

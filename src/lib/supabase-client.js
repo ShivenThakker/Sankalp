@@ -1,5 +1,5 @@
 /**
- * ReliefNet - Supabase Browser Client
+ * Sankalp - Supabase Browser Client
  * 
  * Provides client-side Supabase authentication, real-time channels,
  * and database access for React Client Components.

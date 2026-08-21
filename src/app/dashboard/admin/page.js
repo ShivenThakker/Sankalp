@@ -57,9 +57,9 @@ export default function AdminDashboard() {
   ];
 
   const getCoverageColor = (percentage) => {
-    if (percentage < 30) return 'var(--danger)';
-    if (percentage <= 70) return 'var(--warning)';
-    return 'var(--success)';
+    if (percentage < 30) return '#D62828';
+    if (percentage <= 70) return '#F4A261';
+    return '#2D6A4F';
   };
 
   const mockRequests = [

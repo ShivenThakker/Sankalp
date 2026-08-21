@@ -235,7 +235,7 @@ export default function DisastersPage() {
                     <div className={styles.progressTrack}>
                       <div 
                         className={styles.progressFill} 
-                        style={{ width: `${percent}%`, backgroundColor: percent < 30 ? 'var(--danger-color)' : percent < 70 ? 'var(--warning-color)' : 'var(--success-color)' }}
+                        style={{ width: `${percent}%`, backgroundColor: percent < 30 ? '#D62828' : percent < 70 ? '#F4A261' : '#2D6A4F' }}
                       />
                     </div>
                   </div>

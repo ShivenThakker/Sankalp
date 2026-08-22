@@ -26,7 +26,12 @@ import {
   Menu,
   X,
   LayoutDashboard,
-  Map
+  Map,
+  Filter,
+  Check,
+  UserCheck,
+  Send,
+  Search
 } from 'lucide-react';
 import { useGodMode } from '@/hooks/useGodMode';
 import styles from './page.module.css';
@@ -34,6 +39,9 @@ import styles from './page.module.css';
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('Overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [requestUrgencyFilter, setRequestUrgencyFilter] = useState('all');
+  const [requestStatusFilter, setRequestStatusFilter] = useState('all');
+  const [volunteerStatusFilter, setVolunteerStatusFilter] = useState('all');
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -57,18 +65,26 @@ export default function AdminDashboard() {
   ];
 
   const getCoverageColor = (percentage) => {
-    if (percentage < 30) return '#D62828';
-    if (percentage <= 70) return '#F4A261';
-    return '#2D6A4F';
+    if (percentage < 30) return 'var(--color-danger)';
+    if (percentage <= 70) return 'var(--color-accent)';
+    return 'var(--color-success)';
   };
 
   const mockRequests = [
-    { id: 1, time: '2 min ago', people: 12, needs: ['food', 'medical'], location: 'Fancy Bazaar, Kamrup', status: 'pending', urgency: 'critical' },
-    { id: 2, time: '8 min ago', people: 50, needs: ['shelter'], location: 'Nagaon Town', status: 'pending', urgency: 'high' },
-    { id: 3, time: '15 min ago', people: 5, needs: ['water'], location: 'Chandmari, Kamrup', status: 'resolved', urgency: 'medium' },
-    { id: 4, time: '28 min ago', people: 200, needs: ['food', 'water', 'shelter'], location: 'Darrang District', status: 'matched', urgency: 'critical' },
-    { id: 5, time: '45 min ago', people: 8, needs: ['medical'], location: 'Barpeta', status: 'matched', urgency: 'high' },
-    { id: 6, time: '1 hour ago', people: 30, needs: ['rescue', 'transport'], location: 'Morigaon', status: 'in_progress', urgency: 'critical' },
+    { id: 'req-1', time: '2 min ago', people: 12, needs: ['food', 'medical'], location: 'Fancy Bazaar, Kamrup', status: 'pending', urgency: 'critical', contact: '+91 98765 43210' },
+    { id: 'req-2', time: '8 min ago', people: 50, needs: ['shelter'], location: 'Nagaon Town', status: 'pending', urgency: 'high', contact: '+91 98765 11223' },
+    { id: 'req-3', time: '15 min ago', people: 5, needs: ['water'], location: 'Chandmari, Kamrup', status: 'resolved', urgency: 'medium', contact: '+91 98765 33445' },
+    { id: 'req-4', time: '28 min ago', people: 200, needs: ['food', 'water', 'shelter'], location: 'Darrang District', status: 'matched', urgency: 'critical', contact: '+91 98765 55667' },
+    { id: 'req-5', time: '45 min ago', people: 8, needs: ['medical'], location: 'Barpeta', status: 'matched', urgency: 'high', contact: '+91 98765 77889' },
+    { id: 'req-6', time: '1 hour ago', people: 30, needs: ['rescue', 'transport'], location: 'Morigaon', status: 'in_progress', urgency: 'critical', contact: '+91 98765 99001' },
+  ];
+
+  const mockVolunteers = [
+    { id: 'v-1', name: 'Rahul Sharma', skills: ['First Aid', 'Boat Rescue'], location: 'Guwahati, Kamrup', status: 'Available', phone: '+91 98123 45678', rating: 4.9, deployments: 8 },
+    { id: 'v-2', name: 'Priya Das', skills: ['Food Distribution', 'Medical'], location: 'Silchar, Cachar', status: 'Deployed', phone: '+91 98234 56789', rating: 4.8, deployments: 14 },
+    { id: 'v-3', name: 'Amitav Gogoi', skills: ['Ham Radio', 'Transport'], location: 'Jorhat', status: 'Available', phone: '+91 98345 67890', rating: 5.0, deployments: 6 },
+    { id: 'v-4', name: 'Sunita Roy', skills: ['Shelter Mgmt', 'Childcare'], location: 'Nagaon', status: 'Deployed', phone: '+91 98456 78901', rating: 4.7, deployments: 11 },
+    { id: 'v-5', name: 'Bikram Kalita', skills: ['Rescue', 'Diving'], location: 'Kamrup Metro', status: 'Offline', phone: '+91 98567 89012', rating: 4.9, deployments: 19 },
   ];
 
   const renderUrgencyDot = (urgency, status) => {
@@ -95,6 +111,7 @@ export default function AdminDashboard() {
       location: r.location,
       status: r.status,
       urgency: r.urgency,
+      contact: '+91 98765 00000',
       isCustom: true
     })),
     ...mockRequests
@@ -103,6 +120,17 @@ export default function AdminDashboard() {
   const activeRequestsCount = 47 + simulatedRequests.length;
   const hasCustomDisaster = customDisasters.length > 0;
   const latestCustomDisaster = hasCustomDisaster ? customDisasters[0] : null;
+
+  const filteredRequests = allRequests.filter(req => {
+    if (requestUrgencyFilter !== 'all' && req.urgency !== requestUrgencyFilter) return false;
+    if (requestStatusFilter !== 'all' && req.status !== requestStatusFilter) return false;
+    return true;
+  });
+
+  const filteredVolunteers = mockVolunteers.filter(vol => {
+    if (volunteerStatusFilter !== 'all' && vol.status.toLowerCase() !== volunteerStatusFilter.toLowerCase()) return false;
+    return true;
+  });
 
   return (
     <div className={styles.dashboardContainer}>
@@ -154,6 +182,7 @@ export default function AdminDashboard() {
           <h2>Command Center</h2>
         </div>
 
+        {/* OVERVIEW TAB */}
         {activeTab === 'Overview' && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -165,7 +194,6 @@ export default function AdminDashboard() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className={styles.pulsingBanner}
-                style={{ backgroundColor: 'var(--accent-orange)', color: 'white', padding: '12px 24px', borderRadius: '8px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', animation: 'pulse 2s infinite' }}
               >
                 <AlertTriangle size={24} />
                 <strong style={{ letterSpacing: '1px' }}>⚡ NEW DISASTER DEPLOYED: {latestCustomDisaster.name.toUpperCase()}</strong>
@@ -190,7 +218,7 @@ export default function AdminDashboard() {
             <div className={styles.statsRow}>
               <div className={styles.statCard}>
                 <div className={styles.statHeader}>
-                  <AlertTriangle size={24} className={styles.statIcon} style={{ color: 'var(--danger)' }} />
+                  <AlertTriangle size={24} className={styles.statIcon} style={{ color: 'var(--color-danger)' }} />
                   <span className={styles.trendUp}><TrendingUp size={14} /> +{12 + simulatedRequests.length} today</span>
                 </div>
                 <div className={styles.statValue}>{activeRequestsCount}</div>
@@ -198,21 +226,21 @@ export default function AdminDashboard() {
               </div>
               <div className={styles.statCard}>
                 <div className={styles.statHeader}>
-                  <Building2 size={24} className={styles.statIcon} style={{ color: 'var(--primary)' }} />
+                  <Building2 size={24} className={styles.statIcon} style={{ color: 'var(--color-primary-700)' }} />
                 </div>
                 <div className={styles.statValue}>25</div>
                 <div className={styles.statLabel}>NGOs Responding</div>
               </div>
               <div className={styles.statCard}>
                 <div className={styles.statHeader}>
-                  <Users size={24} className={styles.statIcon} style={{ color: 'var(--secondary)' }} />
+                  <Users size={24} className={styles.statIcon} style={{ color: 'var(--color-accent)' }} />
                 </div>
                 <div className={styles.statValue}>340</div>
                 <div className={styles.statLabel}>Volunteers Deployed</div>
               </div>
               <div className={styles.statCard}>
                 <div className={styles.statHeader}>
-                  <IndianRupee size={24} className={styles.statIcon} style={{ color: 'var(--success)' }} />
+                  <IndianRupee size={24} className={styles.statIcon} style={{ color: 'var(--color-success)' }} />
                 </div>
                 <div className={styles.statValue}>₹17.4L</div>
                 <div className={styles.statLabel}>Funds Raised</div>
@@ -288,21 +316,20 @@ export default function AdminDashboard() {
                   <h3 className={styles.cardTitle}><Clock size={20} /> Incoming Help Requests</h3>
                   <div className={styles.requestFeed}>
                     <AnimatePresence>
-                      {allRequests.map(request => (
+                      {allRequests.slice(0, 6).map(request => (
                         <motion.div 
                           key={request.id} 
-                          initial={request.isCustom ? { opacity: 0, x: -20, backgroundColor: '#fff3e0' } : {}}
-                          animate={request.isCustom ? { opacity: 1, x: 0, backgroundColor: '#ffffff' } : {}}
+                          initial={request.isCustom ? { opacity: 0, x: -20, backgroundColor: 'var(--color-accent-light)' } : {}}
+                          animate={request.isCustom ? { opacity: 1, x: 0, backgroundColor: 'var(--bg-card)' } : {}}
                           transition={{ duration: 0.5 }}
                           className={styles.requestItem}
-                          style={request.isCustom ? { borderLeft: '4px solid var(--accent-orange)' } : {}}
                         >
                           <div className={styles.requestStatusCol}>
                             {renderUrgencyDot(request.urgency, request.status)}
                           </div>
                           <div className={styles.requestContent}>
                             <div className={styles.requestHeader}>
-                              <span className={styles.requestTime}>{request.time} {request.isCustom && <span style={{color: 'orange', fontSize: '10px'}}>⚡ SIMULATED</span>}</span>
+                              <span className={styles.requestTime}>{request.time} {request.isCustom && <span className={styles.simBadge}>⚡ SIMULATED</span>}</span>
                               <span className={`${styles.statusBadge} ${styles[request.status]}`}>
                                 {request.status.replace('_', ' ')}
                               </span>
@@ -348,11 +375,179 @@ export default function AdminDashboard() {
             </div>
           </motion.div>
         )}
-        
-        {activeTab !== 'Overview' && (
+
+        {/* REQUESTS TAB (Full Management Module) */}
+        {activeTab === 'Requests' && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={styles.tabModule}
+          >
+            <div className={styles.tabHeader}>
+              <div>
+                <h2 className={styles.tabTitle}>Help Requests Directory</h2>
+                <p className={styles.tabSubtitle}>Manage and assign incoming emergency requests to verified NGOs</p>
+              </div>
+              <div className={styles.filterRow}>
+                <select 
+                  className={styles.selectFilter} 
+                  value={requestUrgencyFilter}
+                  onChange={(e) => setRequestUrgencyFilter(e.target.value)}
+                >
+                  <option value="all">All Urgency</option>
+                  <option value="critical">Critical</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                </select>
+                <select 
+                  className={styles.selectFilter}
+                  value={requestStatusFilter}
+                  onChange={(e) => setRequestStatusFilter(e.target.value)}
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="pending">Pending</option>
+                  <option value="matched">Matched</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="resolved">Resolved</option>
+                </select>
+              </div>
+            </div>
+
+            <div className={styles.tableCard}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Urgency</th>
+                    <th>Time</th>
+                    <th>People</th>
+                    <th>Needs</th>
+                    <th>Location</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredRequests.map((req) => (
+                    <tr key={req.id}>
+                      <td>
+                        <span className={`${styles.badgeUrgency} ${styles['urgency-' + req.urgency]}`}>
+                          {req.urgency.toUpperCase()}
+                        </span>
+                      </td>
+                      <td className={styles.monoCell}>{req.time}</td>
+                      <td><strong>{req.people}</strong></td>
+                      <td>
+                        <div className={styles.needsPills}>
+                          {req.needs.map((n, i) => (
+                            <span key={i} className={styles.needPill}>{n}</span>
+                          ))}
+                        </div>
+                      </td>
+                      <td>{req.location}</td>
+                      <td className={styles.monoCell}>{req.contact}</td>
+                      <td>
+                        <span className={`${styles.statusBadge} ${styles[req.status]}`}>
+                          {req.status.replace('_', ' ')}
+                        </span>
+                      </td>
+                      <td>
+                        <div className={styles.actionGroup}>
+                          <button className="btn btn-primary btn-sm">
+                            <Send size={14} /> Assign NGO
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        )}
+
+        {/* VOLUNTEERS TAB (Full Roster Module) */}
+        {activeTab === 'Volunteers' && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={styles.tabModule}
+          >
+            <div className={styles.tabHeader}>
+              <div>
+                <h2 className={styles.tabTitle}>Volunteer Force Roster</h2>
+                <p className={styles.tabSubtitle}>Track deployed and available field volunteers across all districts</p>
+              </div>
+              <div className={styles.filterRow}>
+                <select 
+                  className={styles.selectFilter}
+                  value={volunteerStatusFilter}
+                  onChange={(e) => setVolunteerStatusFilter(e.target.value)}
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="available">Available</option>
+                  <option value="deployed">Deployed</option>
+                  <option value="offline">Offline</option>
+                </select>
+              </div>
+            </div>
+
+            <div className={styles.tableCard}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Volunteer Name</th>
+                    <th>Skills</th>
+                    <th>Location</th>
+                    <th>Rating</th>
+                    <th>Deployments</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredVolunteers.map((vol) => (
+                    <tr key={vol.id}>
+                      <td>
+                        <strong>{vol.name}</strong>
+                        <div className={styles.monoSubtext}>{vol.phone}</div>
+                      </td>
+                      <td>
+                        <div className={styles.needsPills}>
+                          {vol.skills.map((skill, i) => (
+                            <span key={i} className={styles.needPill}>{skill}</span>
+                          ))}
+                        </div>
+                      </td>
+                      <td>{vol.location}</td>
+                      <td className={styles.monoCell}>⭐ {vol.rating}</td>
+                      <td className={styles.monoCell}>{vol.deployments}</td>
+                      <td>
+                        <span className={`${styles.statusBadge} ${styles[vol.status.toLowerCase()]}`}>
+                          {vol.status}
+                        </span>
+                      </td>
+                      <td>
+                        <button className="btn btn-secondary btn-sm">
+                          <UserCheck size={14} /> Deploy Task
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        )}
+
+        {/* MAP VIEW / NGOS / OTHER TABS */}
+        {activeTab !== 'Overview' && activeTab !== 'Requests' && activeTab !== 'Volunteers' && (
           <div className={styles.placeholderTab}>
             <h2>{activeTab} Module</h2>
-            <p>This module is under development.</p>
+            <p>Access active response operations for {activeTab}.</p>
+            <Link href="/map" className="btn btn-primary" style={{ marginTop: '16px' }}>
+              Open Full Map Interface
+            </Link>
           </div>
         )}
       </main>

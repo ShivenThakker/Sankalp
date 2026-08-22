@@ -11,7 +11,7 @@ export default function Footer() {
         <div className={styles.topSection}>
           <div className={styles.brandSection}>
             <Link href="/" className={styles.logo}>
-              🌿 <span className={styles.brandText}>Sankalp</span>
+              <span className={styles.brandText}>Sankalp</span>
             </Link>
             <p className={styles.brandDesc}>
               A unified platform for disaster management, NGO coordination, and community resilience.

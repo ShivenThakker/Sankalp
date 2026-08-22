@@ -43,7 +43,7 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          🌿 <span className={styles.brandText}>Sankalp</span>
+          <span className={styles.brandText}>Sankalp</span>
         </Link>
         
         <div className={styles.desktopLinks}>
@@ -65,14 +65,18 @@ export default function Navbar() {
               Login
             </Link>
           ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span style={{ 
-                background: '#D8F3DC', 
-                color: '#2D6A4F', 
-                padding: '4px 12px', 
-                borderRadius: '100px', 
-                fontSize: '0.8rem', 
-                fontWeight: '600' 
+                background: '#CCFBF1', 
+                color: '#0F766E', 
+                padding: '3px 10px', 
+                borderRadius: '4px', 
+                fontSize: '0.75rem', 
+                fontFamily: "'JetBrains Mono', monospace",
+                fontWeight: '600',
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase',
+                border: '1px solid #99F6E4'
               }}>
                 {ROLE_LABELS[role] || 'User'}
               </span>

@@ -1,11 +1,12 @@
 .footer {
-  background: var(--color-primary-900);
+  background: #1B1B1B;
   color: rgba(255, 255, 255, 0.7);
   padding: 3.5rem 0 1.5rem;
   margin-top: auto;
   font-family: var(--font-body);
-  border-top: 3px solid var(--color-primary-600);
+  border-top: none;
 }
+
 
 .container {
   max-width: 1280px;
@@ -80,7 +81,7 @@
 }
 
 .link:hover {
-  color: var(--color-primary-300);
+  color: #D8F3DC;
 }
 
 .newsletterSection {
@@ -119,13 +120,13 @@
 }
 
 .emailInput:focus {
-  border-color: var(--color-primary-400);
+  border-color: #52B788;
 }
 
 .subscribeBtn {
-  background: var(--color-primary-600);
+  background: #2D6A4F;
   color: #FFFFFF;
-  border: 2px solid var(--color-primary-500);
+  border: 2px solid #52B788;
   border-radius: var(--radius-md);
   padding: 10px 20px;
   font-family: var(--font-heading);
@@ -136,8 +137,9 @@
 }
 
 .subscribeBtn:hover {
-  background: var(--color-primary-500);
+  background: #1B4332;
 }
+
 
 .bottomBar {
   border-top: 1px solid rgba(255, 255, 255, 0.1);

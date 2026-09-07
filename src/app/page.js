@@ -14,11 +14,10 @@ import {
   MapPin,
   Clock,
   FileCheck,
-  MonitorPlay,
-  Eye,
   Activity,
   Heart
 } from 'lucide-react';
+
 import { useGodMode } from '@/hooks/useGodMode';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';

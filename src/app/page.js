@@ -183,85 +183,8 @@ export default function LandingPage() {
       </section>
 
       {/* AI MATCHING IN ACTION */}
-      <section className={styles.section} ref={matchRef}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className={styles.sectionHeader}>
-            <span className={styles.badge}><Search size={14} /> AI-Powered Matching</span>
-            <h2 className={styles.sectionTitle}>Not just a directory. AI finds the RIGHT help.</h2>
-            <p className={styles.sectionSubtitle}>Our Gemini-powered engine scores and ranks NGOs by proximity, capability match, and verification status — in under 3 seconds.</p>
-          </div>
-
-          <div className={styles.matchDemo}>
-            {/* Step 1: Request */}
-            <motion.div 
-              className={`${styles.matchCard} ${styles.matchRequest}`}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={matchStep >= 1 ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4 }}
-            >
-              <div className={styles.matchCardHeader}>
-                <AlertTriangle size={18} />
-                <span>Incoming Request</span>
-              </div>
-              <p className={styles.matchCardBody}>"45 people need food + water in Kamrup, Assam"</p>
-              <div className={styles.matchCardMeta}>
-                <span><MapPin size={14} /> Fancy Bazaar, Kamrup</span>
-                <span><Users size={14} /> 45 people</span>
-              </div>
-            </motion.div>
-
-            {/* Step 2: Processing */}
-            <AnimatePresence>
-              {matchStep >= 2 && (
-                <motion.div 
-                  className={styles.matchProcessing}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Zap size={24} />
-                  <span>Gemini AI matched in 2.3s</span>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Step 3: Results */}
-            <div className={styles.matchResults}>
-              {matchedNGOs.map((ngo, i) => (
-                <motion.div 
-                  key={i}
-                  className={styles.matchResultCard}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={matchStep >= 3 ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: i * 0.15 }}
-                >
-                  <div className={styles.matchScoreBadge}>
-                    {ngo.score}<span>/100</span>
-                  </div>
-                  <h4>{ngo.name}</h4>
-                  <div className={styles.matchMeta}>
-                    <span><MapPin size={12} /> {ngo.distance}</span>
-                  </div>
-                  <div className={styles.matchCaps}>
-                    {ngo.capabilities.map((c, j) => (
-                      <span key={j} className={styles.capBadge}>{c}</span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* LIVE DEMO ENGINE */}
-      <div className={styles.bgTeal}>
-        <section className={styles.section}>
+      <div className={styles.bgDarkGreen}>
+        <section className={styles.section} ref={matchRef}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -269,38 +192,70 @@ export default function LandingPage() {
             transition={{ duration: 0.5 }}
           >
             <div className={styles.sectionHeaderLight}>
-              <span className={styles.badgeLight}><MonitorPlay size={14} /> Live Demo Engine</span>
-              <h2 className={styles.sectionTitleLight}>Deploy a disaster. Watch it propagate.</h2>
-              <p className={styles.sectionSubtitleLight}>Show the full disaster response flow in real-time. Create a disaster, watch requests pour in, see NGOs respond — all live in front of judges.</p>
+              <span className={styles.badgeLight}><Search size={14} /> AI-Powered Matching</span>
+              <h2 className={styles.sectionTitleLight}>Not just a directory. AI finds the RIGHT help.</h2>
+              <p className={styles.sectionSubtitleLight}>Our Gemini-powered engine scores and ranks NGOs by proximity, capability match, and verification status — in under 3 seconds.</p>
             </div>
 
-            <div className={styles.demoFlow}>
-              {[
-                { icon: Zap, title: 'Create Disaster', desc: 'Pick location on map, set severity' },
-                { icon: AlertTriangle, title: 'Requests Pour In', desc: 'Simulated help requests auto-generate' },
-                { icon: Shield, title: 'NGOs Respond', desc: 'AI matches and assigns responders' },
-                { icon: Eye, title: 'Multi-Tab View', desc: 'Citizen, NGO, and admin — all synced' },
-              ].map((step, i) => (
-                <motion.div 
-                  key={i}
-                  className={styles.demoStep}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                >
-                  <div className={styles.demoStepNumber}>{String(i + 1).padStart(2, '0')}</div>
-                  <step.icon size={24} />
-                  <h4>{step.title}</h4>
-                  <p>{step.desc}</p>
-                </motion.div>
-              ))}
-            </div>
+            <div className={styles.matchDemo}>
+              {/* Step 1: Request */}
+              <motion.div 
+                className={`${styles.matchCard} ${styles.matchRequest}`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={matchStep >= 1 ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.4 }}
+              >
+                <div className={styles.matchCardHeader}>
+                  <AlertTriangle size={18} />
+                  <span>Incoming Request</span>
+                </div>
+                <p className={styles.matchCardBody}>"45 people need food + water in Kamrup, Assam"</p>
+                <div className={styles.matchCardMeta}>
+                  <span><MapPin size={14} /> Fancy Bazaar, Kamrup</span>
+                  <span><Users size={14} /> 45 people</span>
+                </div>
+              </motion.div>
 
-            <div className={styles.demoCTA}>
-              <Link href="/god-mode" className={styles.btnWhite}>
-                Enter God Mode <ArrowRight size={18} />
-              </Link>
+              {/* Step 2: Processing */}
+              <AnimatePresence>
+                {matchStep >= 2 && (
+                  <motion.div 
+                    className={styles.matchProcessing}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Zap size={24} />
+                    <span>Gemini AI matched in 2.3s</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Step 3: Results */}
+              <div className={styles.matchResults}>
+                {matchedNGOs.map((ngo, i) => (
+                  <motion.div 
+                    key={i}
+                    className={styles.matchResultCard}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={matchStep >= 3 ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.4, delay: i * 0.15 }}
+                  >
+                    <div className={styles.matchScoreBadge}>
+                      {ngo.score}<span>/100</span>
+                    </div>
+                    <h4>{ngo.name}</h4>
+                    <div className={styles.matchMeta}>
+                      <span><MapPin size={12} /> {ngo.distance}</span>
+                    </div>
+                    <div className={styles.matchCaps}>
+                      {ngo.capabilities.map((c, j) => (
+                        <span key={j} className={styles.capBadge}>{c}</span>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </section>
@@ -365,7 +320,7 @@ export default function LandingPage() {
       </section>
 
       {/* ACTIVE ALERTS — Bento Grid */}
-      <div className={styles.bgSubtle}>
+      <div className={styles.bgDarkGreen}>
         <section className={styles.section}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -373,9 +328,9 @@ export default function LandingPage() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5 }}
           >
-            <div className={styles.sectionHeader}>
-              <span className={styles.badge}><AlertTriangle size={14} /> Live Alerts</span>
-              <h2 className={styles.sectionTitle}>Active disaster alerts across India</h2>
+            <div className={styles.sectionHeaderLight}>
+              <span className={styles.badgeLight}><AlertTriangle size={14} /> Live Alerts</span>
+              <h2 className={styles.sectionTitleLight}>Active disaster alerts across India</h2>
             </div>
 
             <div className={styles.bentoGrid}>

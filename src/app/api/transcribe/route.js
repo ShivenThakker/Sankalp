@@ -53,9 +53,4 @@ export async function POST(request) {
   }
 }
 
-// Increase body size limit for audio files (default is 1MB, audio can be up to 25MB)
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+

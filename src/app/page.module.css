@@ -21,10 +21,11 @@
   width: 100%;
 }
 
-.bgTeal {
-  background: var(--color-primary-900);
+.bgDarkGreen {
+  background: #1B4332;
   width: 100%;
 }
+
 
 /* ===== BADGES ===== */
 .badge {
@@ -831,3 +832,32 @@
     font-size: 1.75rem;
   }
 }
+
+/* Cards inside dark green sections */
+.bgDarkGreen .matchCard,
+.bgDarkGreen .matchRequest,
+.bgDarkGreen .matchResultCard {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+.bgDarkGreen .matchCardHeader,
+.bgDarkGreen .matchCardBody,
+.bgDarkGreen .matchCardMeta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.bgDarkGreen .bentoCard {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.bgDarkGreen .bentoTitle {
+  color: #FFFFFF;
+}
+
+.bgDarkGreen .bentoMeta {
+  color: rgba(255, 255, 255, 0.6);
+}
+

@@ -16,39 +16,23 @@ import {
   Clock,
   Volume2,
   ChevronRight,
-  Globe
 } from 'lucide-react';
 import styles from './page.module.css';
 
-// ==================== LANGUAGE LIST ====================
-const LANGUAGES = [
-  { code: 'en-IN', label: 'English', native: 'English' },
-  { code: 'hi-IN', label: 'Hindi', native: 'हिन्दी' },
-  { code: 'bn-IN', label: 'Bengali', native: 'বাংলা' },
-  { code: 'ta-IN', label: 'Tamil', native: 'தமிழ்' },
-  { code: 'te-IN', label: 'Telugu', native: 'తెలుగు' },
-  { code: 'mr-IN', label: 'Marathi', native: 'मराठी' },
-  { code: 'gu-IN', label: 'Gujarati', native: 'ગુજરાતી' },
-  { code: 'kn-IN', label: 'Kannada', native: 'ಕನ್ನಡ' },
-  { code: 'ml-IN', label: 'Malayalam', native: 'മലയാളം' },
-  { code: 'or-IN', label: 'Odia', native: 'ଓଡ଼ିଆ' },
-  { code: 'pa-IN', label: 'Punjabi', native: 'ਪੰਜਾਬੀ' },
-  { code: 'as-IN', label: 'Assamese', native: 'অসমীয়া' },
-  { code: 'ur-IN', label: 'Urdu', native: 'اردو' },
-];
-
-// ==================== MAIN COMPONENT ====================
 export default function HelpPage() {
   const router = useRouter();
 
-  // ---- Voice State ----
-  const [selectedLang, setSelectedLang] = useState('hi-IN');
+  // ---- Recording State ----
   const [isRecording, setIsRecording] = useState(false);
-  const [transcript, setTranscript] = useState('');
-  const [interimTranscript, setInterimTranscript] = useState('');
   const [sosStep, setSosStep] = useState('idle');
-  // 'idle' | 'recording' | 'parsing' | 'matching' | 'done' | 'error'
-  const recognitionRef = useRef(null);
+  // 'idle' | 'recording' | 'transcribing' | 'parsing' | 'matching' | 'done' | 'error'
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+  const streamRef = useRef(null);
+
+  // ---- Transcript ----
+  const [transcript, setTranscript] = useState('');
+  const [detectedLang, setDetectedLang] = useState('');
 
   // ---- Location (auto-captured on mount) ----
   const [location, setLocation] = useState(null);
@@ -77,113 +61,134 @@ export default function HelpPage() {
     }
   }, []);
 
-  // ==================== MATCH API ====================
-  const callMatchAPI = useCallback(async (needs, lat, lng, urgencyLevel, peopleNum) => {
-    const res = await fetch('/api/match', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        needs,
-        lat: lat || 26.18,
-        lng: lng || 91.75,
-        urgency: urgencyLevel,
-        people: peopleNum
-      })
-    });
-    return await res.json();
+  // ==================== MIME TYPE DETECTION ====================
+  const getSupportedMimeType = useCallback(() => {
+    const candidates = [
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/mp4',
+      'audio/ogg;codecs=opus',
+      'audio/wav',
+    ];
+    for (const type of candidates) {
+      if (typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported(type)) {
+        return type;
+      }
+    }
+    return '';
   }, []);
 
-  // ==================== VOICE RECORDING ====================
-  const startRecording = useCallback(() => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert('Voice recognition is not supported in your browser. Please use Chrome or Edge.');
-      return;
-    }
+  // ==================== START RECORDING ====================
+  const startRecording = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+      });
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = selectedLang;
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    recognition.maxAlternatives = 1;
+      streamRef.current = stream;
+      const mimeType = getSupportedMimeType();
+      const options = mimeType ? { mimeType } : undefined;
+      const mediaRecorder = new MediaRecorder(stream, options);
 
-    recognition.onstart = () => {
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = async () => {
+        const actualMime = mediaRecorder.mimeType || 'audio/webm';
+        const extension = actualMime.includes('mp4') ? 'mp4' : 'webm';
+        const audioBlob = new Blob(audioChunksRef.current, { type: actualMime });
+
+        // Stop microphone
+        stream.getTracks().forEach((track) => track.stop());
+
+        // Process the audio
+        await processSOS(audioBlob, extension);
+      };
+
+      mediaRecorderRef.current = mediaRecorder;
+      mediaRecorder.start();
       setIsRecording(true);
       setSosStep('recording');
       setTranscript('');
-      setInterimTranscript('');
-    };
-
-    recognition.onresult = (event) => {
-      let finalT = '';
-      let interimT = '';
-      for (let i = 0; i < event.results.length; i++) {
-        if (event.results[i].isFinal) {
-          finalT += event.results[i][0].transcript;
-        } else {
-          interimT += event.results[i][0].transcript;
-        }
-      }
-      if (finalT) setTranscript(finalT);
-      setInterimTranscript(interimT);
-    };
-
-    recognition.onerror = (event) => {
-      console.error('Speech error:', event.error);
-      setIsRecording(false);
-      if (event.error === 'not-allowed') {
+      setDetectedLang('');
+    } catch (err) {
+      console.error('Microphone access error:', err);
+      if (err.name === 'NotAllowedError') {
         alert('Microphone access was denied. Please allow microphone access and try again.');
+      } else {
+        alert('Could not access microphone. Please check your device settings.');
       }
-      setSosStep('idle');
-    };
+    }
+  }, [getSupportedMimeType]);
 
-    recognition.onend = () => {
-      setIsRecording(false);
-      setTranscript(prev => {
-        if (prev && prev.trim().length > 0) {
-          processSOS(prev);
-        } else {
-          setSosStep('idle');
-        }
-        return prev;
-      });
-    };
-
-    recognitionRef.current = recognition;
-    recognition.start();
-  }, [selectedLang]);
-
+  // ==================== STOP RECORDING ====================
   const stopRecording = useCallback(() => {
-    if (recognitionRef.current) recognitionRef.current.stop();
-  }, []);
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  }, [isRecording]);
 
   // ==================== SOS PROCESSING PIPELINE ====================
-  const processSOS = async (spokenText) => {
-    setSosStep('parsing');
+  const processSOS = async (audioBlob, extension) => {
+    // Step 1: Transcribe with Groq Whisper
+    setSosStep('transcribing');
     try {
-      // Step 1: Gemini parses voice text
+      const formData = new FormData();
+      formData.append('file', audioBlob, `sos_recording.${extension}`);
+
+      const transcribeRes = await fetch('/api/transcribe', {
+        method: 'POST',
+        body: formData,
+      });
+      const transcribeData = await transcribeRes.json();
+
+      if (!transcribeData.text || transcribeData.text.trim().length === 0) {
+        setSosStep('error');
+        return;
+      }
+
+      setTranscript(transcribeData.text);
+      setDetectedLang(transcribeData.language || 'unknown');
+
+      // Step 2: Parse with Gemini
+      setSosStep('parsing');
       const parseRes = await fetch('/api/parse-sos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          transcript: spokenText,
+          transcript: transcribeData.text,
           lat: location?.lat,
           lng: location?.lng,
-          language: selectedLang
+          language: transcribeData.language || 'unknown'
         })
       });
       const parsed = await parseRes.json();
       setParsedData(parsed);
 
-      // Step 2: Auto-match to best NGO
+      // Step 3: Auto-match to best NGO
       setSosStep('matching');
-      const matchData = await callMatchAPI(
-        parsed.needs,
-        location?.lat || 26.18,
-        location?.lng || 91.75,
-        parsed.urgency,
-        parsed.people
-      );
+      const matchRes = await fetch('/api/match', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          needs: parsed.needs,
+          lat: location?.lat || 26.18,
+          lng: location?.lng || 91.75,
+          urgency: parsed.urgency,
+          people: parsed.people
+        })
+      });
+      const matchData = await matchRes.json();
 
       if (matchData.matches && matchData.matches.length > 0) {
         setMatchedNgo(matchData.matches[0]);
@@ -206,7 +211,7 @@ export default function HelpPage() {
     setRequestId('');
     setSosStep('idle');
     setTranscript('');
-    setInterimTranscript('');
+    setDetectedLang('');
   };
 
   // ==================== RENDER: CONFIRMATION SCREEN ====================
@@ -255,6 +260,11 @@ export default function HelpPage() {
               </div>
               {parsedData.message && (
                 <p className={styles.parsedMessage}>"{parsedData.message}"</p>
+              )}
+              {detectedLang && detectedLang !== 'unknown' && (
+                <p className={styles.detectedLangText}>
+                  Detected language: {detectedLang.charAt(0).toUpperCase() + detectedLang.slice(1)}
+                </p>
               )}
             </div>
           )}
@@ -340,7 +350,7 @@ export default function HelpPage() {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>I Need Help</h1>
-        <p className={styles.subtitle}>Tap the SOS button and describe your emergency in any language.</p>
+        <p className={styles.subtitle}>Tap the SOS button and describe your emergency in any language. We'll understand.</p>
       </header>
 
       {/* Location Bar */}
@@ -365,24 +375,10 @@ export default function HelpPage() {
         )}
       </div>
 
-      {/* Language Picker */}
-      <div className={styles.langSection}>
-        <div className={styles.langHeader}>
-          <Globe size={16} />
-          <span>Speak in your language</span>
-        </div>
-        <div className={styles.langScroll}>
-          {LANGUAGES.map((lang) => (
-            <button
-              key={lang.code}
-              className={`${styles.langPill} ${selectedLang === lang.code ? styles.langPillActive : ''}`}
-              onClick={() => setSelectedLang(lang.code)}
-            >
-              {lang.native}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* Supported languages hint */}
+      <p className={styles.langHint}>
+        Speaks: English, हिन्दी, বাংলা, தமிழ், తెలుగు, मराठी, ગુજરાતી, ಕನ್ನಡ, മലയാളം, ਪੰਜਾਬੀ, اردو + more
+      </p>
 
       {/* ===== SOS BUTTON STATES ===== */}
 
@@ -413,11 +409,19 @@ export default function HelpPage() {
             <MicOff size={44} />
             <span>STOP</span>
           </motion.button>
-          <p className={styles.listeningText}>Listening...</p>
-          <div className={styles.transcriptBox}>
-            <Volume2 size={16} className={styles.spin} />
-            <p>{interimTranscript || transcript || '...'}</p>
+          <p className={styles.listeningText}>Recording... Speak now</p>
+          <div className={styles.recordingIndicator}>
+            <span className={styles.recordingDot}></span>
+            <span>Recording in progress</span>
           </div>
+        </div>
+      )}
+
+      {/* Transcribing */}
+      {sosStep === 'transcribing' && (
+        <div className={styles.sosCenter}>
+          <Loader2 size={56} className={styles.spin} style={{ color: '#D62828' }} />
+          <p className={styles.processingText}>Converting speech to text...</p>
         </div>
       )}
 
@@ -426,9 +430,12 @@ export default function HelpPage() {
         <div className={styles.sosCenter}>
           <Loader2 size={56} className={styles.spin} style={{ color: '#2D6A4F' }} />
           <p className={styles.processingText}>AI is understanding your message...</p>
-          <div className={styles.transcriptBox}>
-            <p>"{transcript}"</p>
-          </div>
+          {transcript && (
+            <div className={styles.transcriptBox}>
+              <Volume2 size={16} />
+              <p>"{transcript}"</p>
+            </div>
+          )}
         </div>
       )}
 

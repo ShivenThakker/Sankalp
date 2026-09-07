@@ -11,9 +11,16 @@
 
 /* ===== SECTIONS ===== */
 .section {
-  padding: 80px 24px;
+  padding: 100px 24px;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.bgDarkGreen,
+.bgSubtle {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .bgSubtle {
@@ -24,6 +31,20 @@
 .bgDarkGreen {
   background: #1B4332;
   width: 100%;
+}
+
+.bgWhite {
+  background: #FFFFFF;
+  width: 100%;
+}
+
+/* All full-bleed section wrappers are fullscreen */
+.bgDarkGreen,
+.bgSubtle,
+.bgWhite {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
 }
 
 
@@ -109,17 +130,22 @@
 
 /* ===== HERO ===== */
 .heroSection {
-  padding: 100px 24px 60px;
-  background: linear-gradient(180deg, #F0FDFA 0%, var(--bg-page) 100%);
+  min-height: 100vh;
+  padding: 0 24px;
+  background: linear-gradient(160deg, #F0FFF4 0%, #FFFFFF 60%, var(--bg-page) 100%);
+  display: flex;
+  align-items: center;
 }
 
 .heroInner {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: 48px;
   align-items: center;
+  padding: 120px 0 80px;
 }
 
 .heroLeft {
@@ -725,14 +751,20 @@
 
 /* ===== CTA SECTION ===== */
 .ctaSection {
-  padding: 80px 24px;
+  padding: 100px 24px;
   text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ctaContent {
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
+
 
 .ctaTitle {
   font-family: var(--font-heading);
@@ -833,7 +865,7 @@
   }
 }
 
-/* Cards inside dark green sections */
+/* Cards inside dark green sections — match cards get glass treatment, bento cards keep urgency colors */
 .bgDarkGreen .matchCard,
 .bgDarkGreen .matchRequest,
 .bgDarkGreen .matchResultCard {
@@ -848,16 +880,12 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-.bgDarkGreen .bentoCard {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
+/* Bento cards: keep their urgency colors (red/orange/green) — do NOT override */
 .bgDarkGreen .bentoTitle {
-  color: #FFFFFF;
+  color: var(--text-heading);
 }
 
 .bgDarkGreen .bentoMeta {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
 }
 

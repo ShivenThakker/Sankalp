@@ -261,13 +261,14 @@ export default function LandingPage() {
       </div>
 
       {/* 8-POINT TRUST VERIFICATION */}
-      <section className={styles.section}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-        >
+      <div className={styles.bgWhite}>
+        <section className={styles.section}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6 }}
+          >
           <div className={styles.sectionHeader}>
             <span className={styles.badge}><Shield size={14} /> Trust Pipeline</span>
             <h2 className={styles.sectionTitle}>Every NGO passes 8 verification checks</h2>
@@ -315,8 +316,10 @@ export default function LandingPage() {
               Browse Verified NGOs <ArrowRight size={18} />
             </Link>
           </div>
-        </motion.div>
-      </section>
+          </motion.div>
+        </section>
+      </div>
+
 
       {/* ACTIVE ALERTS — Bento Grid */}
       <div className={styles.bgDarkGreen}>
@@ -363,14 +366,15 @@ export default function LandingPage() {
       </div>
 
       {/* CTA */}
-      <section className={styles.ctaSection}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          className={styles.ctaContent}
-        >
+      <div className={styles.bgWhite}>
+        <section className={styles.ctaSection}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}
+            className={styles.ctaContent}
+          >
           <h2 className={styles.ctaTitle}>Ready to make a difference?</h2>
           <div className={styles.ctaButtons}>
             <button onClick={handleNeedHelp} className={styles.btnPrimary}>
@@ -380,8 +384,10 @@ export default function LandingPage() {
               <Heart size={18} /> Donate Now
             </Link>
           </div>
-        </motion.div>
-      </section>
+          </motion.div>
+        </section>
+      </div>
     </div>
   );
 }
+

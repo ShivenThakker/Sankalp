@@ -42,7 +42,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .manualLocInline {
@@ -63,54 +63,13 @@
 }
 .inlineInput:focus { border-color: #D62828; }
 
-/* ==================== LANGUAGE PICKER ==================== */
-.langSection {
-  width: 100%;
-  margin-bottom: 24px;
-}
-
-.langHeader {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 10px;
-}
-
-.langScroll {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.langScroll::-webkit-scrollbar { display: none; }
-
-.langPill {
-  flex-shrink: 0;
-  padding: 8px 16px;
-  border-radius: 99px;
-  border: 1px solid #E5E7EB;
-  background: #FFFFFF;
-  color: #374151;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-
-.langPill:hover { border-color: #D62828; }
-
-.langPillActive {
-  background: #D62828;
-  color: #FFFFFF;
-  border-color: #D62828;
-  font-weight: 700;
+/* ==================== LANGUAGE HINT ==================== */
+.langHint {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  text-align: center;
+  margin: 0 0 16px;
+  line-height: 1.5;
 }
 
 /* ==================== SOS BUTTON ==================== */
@@ -176,6 +135,30 @@
   letter-spacing: 1px;
 }
 
+/* ==================== RECORDING INDICATOR ==================== */
+.recordingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #D62828;
+  font-weight: 600;
+}
+
+.recordingDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #D62828;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ==================== TRANSCRIPT & PROCESSING ==================== */
 .transcriptBox {
   width: 100%;
   max-width: 500px;
@@ -290,6 +273,7 @@
 .urgency_medium { color: #E76F51; }
 .urgency_high { color: #D62828; font-weight: 800; }
 .parsedMessage { font-size: 0.9rem; font-style: italic; color: #6B7280; margin: 8px 0 0; padding-top: 12px; border-top: 1px solid #E5E7EB; }
+.detectedLangText { font-size: 0.8rem; color: #9CA3AF; margin: 8px 0 0; font-style: italic; }
 
 .ngoCard { background: #FFFFFF; border: 2px solid #2D6A4F; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(45, 106, 79, 0.1); }
 .ngoCardHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }

@@ -366,7 +366,7 @@ export default function LandingPage() {
       </div>
 
       {/* CTA */}
-      <div className={styles.bgWhite}>
+      <div className={`${styles.bgWhite} ${styles.ctaBand}`}>
         <section className={styles.ctaSection}>
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
@@ -390,4 +390,3 @@ export default function LandingPage() {
     </div>
   );
 }
-

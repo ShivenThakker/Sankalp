@@ -2,11 +2,14 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 import styles from './Footer.module.css';
 
 export default function Footer() {
+  const pathname = usePathname();
+
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} ${pathname === '/' ? styles.homeFooter : ''}`}>
       <div className={styles.container}>
         <div className={styles.topSection}>
           <div className={styles.brandSection}>

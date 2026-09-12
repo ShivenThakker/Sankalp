@@ -216,49 +216,48 @@ export default function LandingPage() {
               <p className={styles.sectionSubtitleLight}>Our Gemini-powered engine scores and ranks NGOs by proximity, capability match, and verification status — in under 3 seconds.</p>
             </div>
 
-            {/* Two demos side by side */}
-            <div className={styles.matchDemoGrid}>
+            {/* Demo 1: Assam Floods */}
+            <div className={styles.matchDemoCol}>
+              <motion.div
+                className={`${styles.matchCard} ${styles.matchRequest}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={matchStep >= 1 ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4 }}
+              >
+                <div className={styles.matchCardHeader}>
+                  <AlertTriangle size={18} />
+                  <span>Incoming Request</span>
+                </div>
+                <p className={styles.matchCardBody}>&quot;45 people need food + water in Kamrup, Assam&quot;</p>
+                <div className={styles.matchCardMeta}>
+                  <span><MapPin size={14} /> Fancy Bazaar, Kamrup</span>
+                  <span><Users size={14} /> 45 people</span>
+                </div>
+              </motion.div>
 
-              {/* — Demo 1: Assam Floods — */}
-              <div className={styles.matchDemoCol}>
-                <motion.div
-                  className={`${styles.matchCard} ${styles.matchRequest}`}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={matchStep >= 1 ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.4 }}
-                >
-                  <div className={styles.matchCardHeader}>
-                    <AlertTriangle size={18} />
-                    <span>Incoming Request</span>
-                  </div>
-                  <p className={styles.matchCardBody}>&quot;45 people need food + water in Kamrup, Assam&quot;</p>
-                  <div className={styles.matchCardMeta}>
-                    <span><MapPin size={14} /> Fancy Bazaar, Kamrup</span>
-                    <span><Users size={14} /> 45 people</span>
-                  </div>
-                </motion.div>
+              <AnimatePresence>
+                {matchStep >= 2 && (
+                  <motion.div
+                    className={styles.matchProcessing}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Zap size={20} />
+                    <span>Gemini AI matched in 2.3s</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-                <AnimatePresence>
-                  {matchStep >= 2 && (
-                    <motion.div
-                      className={styles.matchProcessing}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Zap size={20} />
-                      <span>Gemini AI matched in 2.3s</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <div className={styles.matchResultsCol}>
+              {matchStep >= 3 && (
+                <div className={styles.matchResults}>
                   {matchedNGOs.map((ngo, i) => (
                     <motion.div
                       key={i}
                       className={styles.matchResultCard}
                       initial={{ opacity: 0, y: 16 }}
-                      animate={matchStep >= 3 ? { opacity: 1, y: 0 } : {}}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.35, delay: i * 0.12 }}
                     >
                       <div className={styles.matchScoreBadge}>{ngo.score}<span>/100</span></div>
@@ -270,48 +269,51 @@ export default function LandingPage() {
                     </motion.div>
                   ))}
                 </div>
-              </div>
+              )}
+            </div>
 
-              {/* — Demo 2: Kerala Landslide — */}
-              <div className={styles.matchDemoCol} ref={matchRef2}>
-                <motion.div
-                  className={`${styles.matchCard} ${styles.matchRequest2}`}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={matchStep2 >= 1 ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.4 }}
-                >
-                  <div className={styles.matchCardHeader2}>
-                    <AlertTriangle size={18} />
-                    <span>Incoming Request</span>
-                  </div>
-                  <p className={styles.matchCardBody}>&quot;20 log phasein hain, doctor chahiye, Wayanad mein landslide hua hai&quot;</p>
-                  <div className={styles.matchCardMeta}>
-                    <span><MapPin size={14} /> Meppadi, Wayanad, Kerala</span>
-                    <span><Users size={14} /> 20 people</span>
-                  </div>
-                </motion.div>
+            {/* Demo 2: Kerala Landslide */}
+            <div className={styles.matchDemoCol} ref={matchRef2}>
+              <motion.div
+                className={`${styles.matchCard} ${styles.matchRequest2}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={matchStep2 >= 1 ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4 }}
+              >
+                <div className={styles.matchCardHeader2}>
+                  <AlertTriangle size={18} />
+                  <span>Incoming Request</span>
+                </div>
+                <p className={styles.matchCardBody}>&quot;20 log phasein hain, doctor chahiye, Wayanad mein landslide hua hai&quot;</p>
+                <div className={styles.matchCardMeta}>
+                  <span><MapPin size={14} /> Meppadi, Wayanad, Kerala</span>
+                  <span><Users size={14} /> 20 people</span>
+                </div>
+              </motion.div>
 
-                <AnimatePresence>
-                  {matchStep2 >= 2 && (
-                    <motion.div
-                      className={styles.matchProcessing}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Zap size={20} />
-                      <span>Gemini AI matched in 1.8s</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <AnimatePresence>
+                {matchStep2 >= 2 && (
+                  <motion.div
+                    className={styles.matchProcessing}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Zap size={20} />
+                    <span>Gemini AI matched in 1.8s</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-                <div className={styles.matchResultsCol}>
+              {matchStep2 >= 3 && (
+                <div className={styles.matchResults}>
                   {matchedNGOs2.map((ngo, i) => (
                     <motion.div
                       key={i}
                       className={styles.matchResultCard}
                       initial={{ opacity: 0, y: 16 }}
-                      animate={matchStep2 >= 3 ? { opacity: 1, y: 0 } : {}}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.35, delay: i * 0.12 }}
                     >
                       <div className={styles.matchScoreBadge}>{ngo.score}<span>/100</span></div>
@@ -323,8 +325,7 @@ export default function LandingPage() {
                     </motion.div>
                   ))}
                 </div>
-              </div>
-
+              )}
             </div>
 
           </motion.div>

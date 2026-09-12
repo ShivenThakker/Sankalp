@@ -98,7 +98,7 @@ export default function LandingPage() {
     { name: 'Activity Status', icon: Activity },
   ];
 
-  // AI Matching demo animation
+  // AI Matching demo animation — request 1 (Assam floods)
   const [matchStep, setMatchStep] = useState(0);
   const matchRef = useRef(null);
   const matchInView = useInView(matchRef, { once: true, amount: 0.3 });
@@ -112,10 +112,30 @@ export default function LandingPage() {
     }
   }, [matchInView, matchStep]);
 
+  // AI Matching demo animation — request 2 (Kerala landslide)
+  const [matchStep2, setMatchStep2] = useState(0);
+  const matchRef2 = useRef(null);
+  const matchInView2 = useInView(matchRef2, { once: true, amount: 0.3 });
+
+  useEffect(() => {
+    if (matchInView2 && matchStep2 === 0) {
+      const t1 = setTimeout(() => setMatchStep2(1), 600);
+      const t2 = setTimeout(() => setMatchStep2(2), 2000);
+      const t3 = setTimeout(() => setMatchStep2(3), 3200);
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    }
+  }, [matchInView2, matchStep2]);
+
   const matchedNGOs = [
     { name: 'Assam Relief Foundation', score: 94, distance: '8km', capabilities: ['Food', 'Water', 'Shelter'] },
     { name: 'Shelter Now India', score: 87, distance: '12km', capabilities: ['Food', 'Shelter'] },
     { name: 'MedCare Initiative', score: 72, distance: '25km', capabilities: ['Medical', 'Transport'] },
+  ];
+
+  const matchedNGOs2 = [
+    { name: 'Kerala Rescue Force', score: 96, distance: '5km', capabilities: ['Rescue', 'Medical'] },
+    { name: 'Hills Relief Trust', score: 81, distance: '14km', capabilities: ['Shelter', 'Food'] },
+    { name: 'RapidAid India', score: 68, distance: '31km', capabilities: ['Transport', 'Rescue'] },
   ];
 
   return (
@@ -256,6 +276,71 @@ export default function LandingPage() {
                 ))}
               </div>
             </div>
+
+            {/* — Second Demo: Kerala Landslide — */}
+            <div ref={matchRef2} style={{ marginTop: '64px' }}>
+              <div className={styles.matchDemo}>
+                {/* Request 2 */}
+                <motion.div
+                  className={`${styles.matchCard} ${styles.matchRequest2}`}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={matchStep2 >= 1 ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.4 }}
+                >
+                  <div className={styles.matchCardHeader2}>
+                    <AlertTriangle size={18} />
+                    <span>Incoming Request</span>
+                  </div>
+                  <p className={styles.matchCardBody}>&quot;20 log phasein hain, doctor chahiye, Wayanad mein landslide hua hai&quot;</p>
+                  <div className={styles.matchCardMeta}>
+                    <span><MapPin size={14} /> Meppadi, Wayanad, Kerala</span>
+                    <span><Users size={14} /> 20 people</span>
+                  </div>
+                </motion.div>
+
+                {/* Processing 2 */}
+                <AnimatePresence>
+                  {matchStep2 >= 2 && (
+                    <motion.div
+                      className={styles.matchProcessing}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Zap size={24} />
+                      <span>Gemini AI matched in 1.8s</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Results 2 */}
+                <div className={styles.matchResults}>
+                  {matchedNGOs2.map((ngo, i) => (
+                    <motion.div
+                      key={i}
+                      className={styles.matchResultCard}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={matchStep2 >= 3 ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.4, delay: i * 0.15 }}
+                    >
+                      <div className={styles.matchScoreBadge}>
+                        {ngo.score}<span>/100</span>
+                      </div>
+                      <h4>{ngo.name}</h4>
+                      <div className={styles.matchMeta}>
+                        <span><MapPin size={12} /> {ngo.distance}</span>
+                      </div>
+                      <div className={styles.matchCaps}>
+                        {ngo.capabilities.map((c, j) => (
+                          <span key={j} className={styles.capBadge}>{c}</span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </motion.div>
         </section>
       </div>

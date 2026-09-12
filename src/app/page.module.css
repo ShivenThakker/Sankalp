@@ -390,6 +390,11 @@
   background: var(--color-accent-bg);
 }
 
+.matchRequest2 {
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
 .matchCardHeader {
   display: flex;
   align-items: center;
@@ -400,6 +405,18 @@
   color: var(--color-accent-deep);
   margin-bottom: 14px;
 }
+
+.matchCardHeader2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-danger);
+  margin-bottom: 14px;
+}
+
 
 .matchCardBody {
   font-size: 1.2rem;

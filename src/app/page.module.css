@@ -950,6 +950,25 @@
   color: var(--text-muted);
 }
 
+.bgDarkGreen .matchRequest2 {
+  background: #FFFFFF;
+  border-color: var(--color-danger);
+  color: var(--text-heading);
+}
+
+.bgDarkGreen .matchRequest2 .matchCardHeader2 {
+  color: var(--color-danger);
+}
+
+.bgDarkGreen .matchRequest2 .matchCardBody {
+  color: var(--text-heading);
+}
+
+.bgDarkGreen .matchRequest2 .matchCardMeta {
+  color: var(--text-muted);
+}
+
+
 /* Bento cards: keep their urgency colors (red/orange/green) — do NOT override */
 .bgDarkGreen .bentoTitle {
   color: var(--text-heading);

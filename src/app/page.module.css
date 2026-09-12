@@ -16,35 +16,22 @@
   margin: 0 auto;
 }
 
-.bgDarkGreen,
-.bgSubtle {
-  display: flex;
-  align-items: center;
-  min-height: 100vh;
-}
-
 .bgSubtle {
   background: var(--bg-subtle);
   width: 100%;
+  display: block;
 }
 
 .bgDarkGreen {
   background: #1B4332;
   width: 100%;
+  display: block;
 }
 
 .bgWhite {
   background: #FFFFFF;
   width: 100%;
-}
-
-/* All full-bleed section wrappers are fullscreen */
-.bgDarkGreen,
-.bgSubtle,
-.bgWhite {
-  display: flex;
-  align-items: center;
-  min-height: 100vh;
+  display: block;
 }
 
 
@@ -368,6 +355,26 @@
 }
 
 /* ===== AI MATCHING DEMO ===== */
+.matchDemoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  width: 100%;
+}
+
+.matchDemoCol {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.matchResultsCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* keep old matchDemo/matchResults for any other usage */
 .matchDemo {
   display: flex;
   flex-direction: column;
@@ -392,7 +399,7 @@
 
 .matchRequest2 {
   border-color: var(--color-danger);
-  background: var(--color-danger-bg);
+  background: #FFFFFF;
 }
 
 .matchCardHeader {

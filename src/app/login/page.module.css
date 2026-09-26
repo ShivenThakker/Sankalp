@@ -5,8 +5,8 @@
   align-items: center;
   justify-content: center;
   padding: 100px 24px 64px;
-  background-color: #FAFAF8;
-  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-page);
+  font-family: var(--font-body);
 }
 
 .header {
@@ -15,16 +15,17 @@
 }
 
 .title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
   font-weight: 700;
-  color: #1B1B1B;
+  color: var(--text-heading);
   margin-bottom: 12px;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  color: #6B7280;
-  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-size: 1.05rem;
 }
 
 .grid {
@@ -36,34 +37,34 @@
 }
 
 .card {
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 16px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
   padding: 32px 24px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border-top: 4px solid transparent;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .card h2 {
+  font-family: var(--font-heading);
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1B1B1B;
+  color: var(--text-heading);
   margin-bottom: 12px;
 }
 
 .card p {
-  color: #6B7280;
+  color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.5;
 }
@@ -71,25 +72,36 @@
 .iconWrapper {
   margin-bottom: 20px;
   padding: 16px;
-  border-radius: 50%;
-  background: #F3F4F6;
-  color: #374151;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  color: var(--text-heading);
+  border: 1px solid var(--border-color);
 }
 
-.blue { border-top-color: #457B9D; }
-.blue .iconWrapper { background: #E3F2FD; color: #457B9D; }
+.blue {
+  border-color: var(--color-primary-600);
+}
+.blue .iconWrapper {
+  background: var(--color-primary-100);
+  color: var(--color-primary-800);
+  border-color: var(--color-primary-200);
+}
 
-.green { border-top-color: #2D6A4F; }
-.green .iconWrapper { background: #D8F3DC; color: #2D6A4F; }
-
-.orange { border-top-color: #E76F51; }
-.orange .iconWrapper { background: #FFF3E0; color: #E76F51; }
+.green {
+  border-color: var(--color-accent);
+}
+.green .iconWrapper {
+  background: var(--color-accent-light);
+  color: var(--color-accent-deep);
+  border-color: rgba(245, 158, 11, 0.3);
+}
 
 .note {
   margin-top: 48px;
-  color: #6B7280;
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-align: center;
+  font-family: var(--font-mono);
 }
 
 @media (max-width: 768px) {

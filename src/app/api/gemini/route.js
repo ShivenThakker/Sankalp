@@ -14,7 +14,7 @@ export async function POST(request) {
 
     const systemPrompt = 'You are Sankalp AI, a disaster relief coordination assistant for India. You help District Collectors make informed decisions during disasters by analyzing resource gaps, suggesting NGO assignments, and providing situation summaries. Be concise, data-driven, and action-oriented.\n\n';
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

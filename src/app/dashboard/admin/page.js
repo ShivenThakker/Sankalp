@@ -631,12 +631,7 @@ export default function AdminDashboard() {
                     const status = getReqStatus(req);
                     const isResolved = status === 'resolved';
                     return (
-                      <motion.tr
-                        key={req.id}
-                        layout
-                        initial={false}
-                        animate={{ backgroundColor: 'transparent' }}
-                      >
+                      <tr key={req.id}>
                         <td>
                           <span className={`${styles.badgeUrgency} ${styles['urgency-' + req.urgency]}`}>
                             {req.urgency.toUpperCase()}
@@ -673,7 +668,7 @@ export default function AdminDashboard() {
                             )}
                           </div>
                         </td>
-                      </motion.tr>
+                      </tr>
                     );
                   })}
                 </tbody>

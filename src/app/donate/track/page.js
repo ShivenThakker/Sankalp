@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Search, CheckCircle, Clock, Truck, Package } from 'lucide-react';
 import styles from './page.module.css';
 
@@ -40,110 +41,146 @@ const STATUS_CONFIG = {
   pending: { label: 'Pending', color: '#64748b', Icon: Clock },
 };
 
-export default function TrackDonationPage() {
+// Inner component that uses useSearchParams — must be wrapped in Suspense
+function TrackContent() {
+  const searchParams = useSearchParams();
   const [searchId, setSearchId] = useState('');
   const [results, setResults] = useState(null);
   const [searched, setSearched] = useState(false);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const found = MOCK_DONATIONS.find(d => d.id.toLowerCase() === searchId.trim().toLowerCase());
+  const doSearch = (id) => {
+    const query = (id || searchId).trim().toLowerCase();
+    if (!query) return;
+
+    // 1. Check localStorage for user-generated donations
+    try {
+      const stored = JSON.parse(localStorage.getItem('sankalp_donations') || '[]');
+      const localMatch = stored.find(d => d.id.toLowerCase() === query);
+      if (localMatch) {
+        setResults(localMatch);
+        setSearched(true);
+        return;
+      }
+    } catch (_) {}
+
+    // 2. Fall back to hardcoded demos
+    const found = MOCK_DONATIONS.find(d => d.id.toLowerCase() === query);
     setResults(found || null);
     setSearched(true);
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
+  // Auto-fill + search if ?id= param is present (linked from donation receipt)
+  useEffect(() => {
+    const paramId = searchParams.get('id');
+    if (paramId) {
+      setSearchId(paramId);
+      doSearch(paramId);
+    }
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    doSearch(searchId);
   };
 
+  const formatCurrency = (amount) =>
+    new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <h1 className={styles.title}>🔍 Track Your Donation</h1>
+      <p className={styles.subtitle}>Enter your Receipt ID to see exactly where your money went.</p>
+
+      <form onSubmit={handleSearch} className={styles.searchForm}>
+        <div className={styles.searchInputWrap}>
+          <Search size={20} className={styles.searchIcon} />
+          <input
+            type="text"
+            placeholder="e.g. RNET-2026-48291"
+            value={searchId}
+            onChange={(e) => setSearchId(e.target.value)}
+            className={styles.searchInput}
+          />
+        </div>
+        <button type="submit" className={styles.searchBtn}>Track</button>
+      </form>
+
+      <div className={styles.demoHint}>
+        💡 Try demo IDs:{' '}
+        <button type="button" onClick={() => setSearchId('RNET-2026-48291')} className={styles.hintBtn}>RNET-2026-48291</button>
+        {' '}or{' '}
+        <button type="button" onClick={() => setSearchId('RNET-2026-37154')} className={styles.hintBtn}>RNET-2026-37154</button>
+      </div>
+
+      {searched && !results && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={styles.notFound}>
+          ❌ No donation found with ID &quot;{searchId}&quot;. Check your receipt and try again.
+        </motion.div>
+      )}
+
+      {results && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={styles.resultCard}
+        >
+          <div className={styles.resultHeader}>
+            <div>
+              <h2 className={styles.receiptId}>{results.id}</h2>
+              <p className={styles.disasterName}>{results.disaster}</p>
+              <p className={styles.dateLine}>
+                Donated on {new Date(results.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </p>
+            </div>
+            <div className={styles.totalAmount}>{formatCurrency(results.amount)}</div>
+          </div>
+
+          <h3 className={styles.allocationTitle}>Allocation Breakdown</h3>
+
+          <div className={styles.allocList}>
+            {results.allocations.map((alloc, idx) => {
+              const statusInfo = STATUS_CONFIG[alloc.status] || STATUS_CONFIG.pending;
+              const StatusIcon = statusInfo.Icon;
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className={styles.allocItem}
+                >
+                  <div className={styles.allocLeft}>
+                    <span className={styles.allocEmoji}>{alloc.icon}</span>
+                    <div>
+                      <div className={styles.allocCategory}>{alloc.category}</div>
+                      <div className={styles.allocNgo}>→ {alloc.ngo}</div>
+                    </div>
+                  </div>
+                  <div className={styles.allocRight}>
+                    <div className={styles.allocAmount}>{formatCurrency(alloc.amount)}</div>
+                    <div className={styles.allocStatus} style={{ color: statusInfo.color }}>
+                      <StatusIcon size={14} /> {statusInfo.label}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+}
+
+export default function TrackDonationPage() {
   return (
     <div className={styles.container}>
       <Link href="/donate" className={styles.backLink}>
         <ArrowLeft size={16} /> Back to Donate
       </Link>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <h1 className={styles.title}>🔍 Track Your Donation</h1>
-        <p className={styles.subtitle}>Enter your Receipt ID to see exactly where your money went.</p>
-
-        <form onSubmit={handleSearch} className={styles.searchForm}>
-          <div className={styles.searchInputWrap}>
-            <Search size={20} className={styles.searchIcon} />
-            <input
-              type="text"
-              placeholder="e.g. RNET-2026-48291"
-              value={searchId}
-              onChange={(e) => setSearchId(e.target.value)}
-              className={styles.searchInput}
-            />
-          </div>
-          <button type="submit" className={styles.searchBtn}>Track</button>
-        </form>
-
-        <div className={styles.demoHint}>
-          💡 Try these IDs: <button type="button" onClick={() => setSearchId('RNET-2026-48291')} className={styles.hintBtn}>RNET-2026-48291</button> or <button type="button" onClick={() => setSearchId('RNET-2026-37154')} className={styles.hintBtn}>RNET-2026-37154</button>
-        </div>
-
-        {searched && !results && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={styles.notFound}>
-            ❌ No donation found with ID &quot;{searchId}&quot;. Check your receipt and try again.
-          </motion.div>
-        )}
-
-        {results && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={styles.resultCard}
-          >
-            <div className={styles.resultHeader}>
-              <div>
-                <h2 className={styles.receiptId}>{results.id}</h2>
-                <p className={styles.disasterName}>{results.disaster}</p>
-                <p className={styles.dateLine}>Donated on {new Date(results.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-              </div>
-              <div className={styles.totalAmount}>{formatCurrency(results.amount)}</div>
-            </div>
-
-            <h3 className={styles.allocationTitle}>Allocation Breakdown</h3>
-
-            <div className={styles.allocList}>
-              {results.allocations.map((alloc, idx) => {
-                const statusInfo = STATUS_CONFIG[alloc.status];
-                const StatusIcon = statusInfo.Icon;
-                return (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className={styles.allocItem}
-                  >
-                    <div className={styles.allocLeft}>
-                      <span className={styles.allocEmoji}>{alloc.icon}</span>
-                      <div>
-                        <div className={styles.allocCategory}>{alloc.category}</div>
-                        <div className={styles.allocNgo}>→ {alloc.ngo}</div>
-                      </div>
-                    </div>
-                    <div className={styles.allocRight}>
-                      <div className={styles.allocAmount}>{formatCurrency(alloc.amount)}</div>
-                      <div className={styles.allocStatus} style={{ color: statusInfo.color }}>
-                        <StatusIcon size={14} /> {statusInfo.label}
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-
-          </motion.div>
-        )}
-      </motion.div>
+      <Suspense fallback={<div className={styles.subtitle}>Loading...</div>}>
+        <TrackContent />
+      </Suspense>
     </div>
   );
 }

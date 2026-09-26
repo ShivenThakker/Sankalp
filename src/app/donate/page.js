@@ -84,7 +84,54 @@ export default function DonatePage() {
     const finalAmount = isCustom ? (parseInt(customAmount) || 0) : amount;
     if (finalAmount <= 0) return;
 
-    setReceiptId(`RNET-2026-${Math.floor(10000 + Math.random() * 90000)}`);
+    const id = `RNET-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+
+    // Build allocation breakdown from user's selection
+    const NGO_MAP = {
+      food: 'Assam Relief Foundation',
+      medical: 'Health First India',
+      shelter: 'Shelter Now India',
+      logistics: 'Rapid Response Team',
+    };
+    const ICON_MAP = { food: '🍚', medical: '💊', shelter: '🏠', logistics: '🚗' };
+    const LABEL_MAP = { food: 'Food & Nutrition', medical: 'Medical Supplies', shelter: 'Shelter Materials', logistics: 'Transport & Logistics' };
+
+    const selectedKeys = allocations.platform
+      ? ['food', 'medical', 'shelter', 'logistics']
+      : Object.keys(allocations).filter(k => k !== 'platform' && allocations[k]);
+
+    const keysToUse = selectedKeys.length > 0 ? selectedKeys : ['food', 'medical', 'shelter', 'logistics'];
+    const share = Math.floor(finalAmount / keysToUse.length);
+    const remainder = finalAmount - share * keysToUse.length;
+
+    const allocationBreakdown = keysToUse.map((key, i) => ({
+      category: LABEL_MAP[key],
+      amount: i === 0 ? share + remainder : share,
+      ngo: NGO_MAP[key],
+      status: 'pending',
+      icon: ICON_MAP[key],
+    }));
+
+    const selectedDisasterObj = allCauses.find(d => d.id === selectedDisaster);
+
+    const donationRecord = {
+      id,
+      amount: finalAmount,
+      date: new Date().toISOString().split('T')[0],
+      disaster: selectedDisasterObj?.title || 'General Relief Fund',
+      status: 'pending',
+      donor: donorInfo.anonymous ? 'Anonymous' : donorInfo.name || 'Anonymous',
+      allocations: allocationBreakdown,
+    };
+
+    // Persist to localStorage so track page can look it up
+    try {
+      const existing = JSON.parse(localStorage.getItem('sankalp_donations') || '[]');
+      existing.unshift(donationRecord);
+      localStorage.setItem('sankalp_donations', JSON.stringify(existing.slice(0, 50)));
+    } catch (_) {}
+
+    setReceiptId(id);
     setIsSuccess(true);
   };
 
@@ -335,7 +382,7 @@ export default function DonatePage() {
                 <span>Receipt ID:</span>
                 <strong>{receiptId}</strong>
               </div>
-              <a href="/donate/track" className={styles.trackLink}>
+              <a href={`/donate/track?id=${receiptId}`} className={styles.trackLink}>
                 Track your donation <ChevronRight size={16} />
               </a>
             </motion.div>

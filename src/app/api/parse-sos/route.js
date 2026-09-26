@@ -48,7 +48,7 @@ Examples:
 - "Engal gramathil vellam pugunthatu, unavum thanni thevai, 50 per irukkom" -> {"needs":["food","water"],"people":50,"urgency":"high","location_description":"Not specified","message":"Village flooded, 50 people need food and water"}`;
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
